@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity
             default:
                 return false;
         }
-        
+
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
