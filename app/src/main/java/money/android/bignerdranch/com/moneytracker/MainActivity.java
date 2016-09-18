@@ -3,6 +3,9 @@ package money.android.bignerdranch.com.moneytracker;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -13,6 +16,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,10 +42,30 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         Log.d(TAG, "onCreate");
+
+        if (savedInstanceState == null)
+        {
+            replaceFragment(new ExpensesFragment());
+        }
+    }
+    private void replaceFragment(Fragment fragment) {
+          String backStackName = fragment.getClass().getName();
+
+
+          FragmentManager manager = getSupportFragmentManager();
+          boolean fragmentPopped = manager.popBackStackImmediate(backStackName, 0);
+
+
+          if (! fragmentPopped && manager.findFragmentByTag(backStackName) == null) {
+                  FragmentTransaction ft = manager.beginTransaction();
+                  ft.replace(R.id.main_container, fragment, backStackName);
+                   ft.addToBackStack(backStackName);
+                   ft.commit();
+          }
     }
 
     @Override
