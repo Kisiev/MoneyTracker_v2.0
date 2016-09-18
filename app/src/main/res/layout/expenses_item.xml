@@ -15,13 +15,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/name"
+            android:id="@+id/name_expense_item"
             android:text="sdf"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/price"
-            android:layout_toRightOf="@id/name"/>
+            android:id="@+id/price_expense_item"
+            android:layout_toRightOf="@id/name_expense_item"/>
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>
