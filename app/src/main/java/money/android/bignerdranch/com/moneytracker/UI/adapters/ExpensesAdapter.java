@@ -1,6 +1,7 @@
 package money.android.bignerdranch.com.moneytracker.UI.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
     @Override
     public void onBindViewHolder(ExpensesHolder holder, int position) {
         ExpenseModel expenseModel = expensesList.get(position);
+        Log.d("myf", String.valueOf(expenseModel.getName()));
         holder.name.setText(expenseModel.getName());
         holder.price.setText(expenseModel.getPrice());
     }

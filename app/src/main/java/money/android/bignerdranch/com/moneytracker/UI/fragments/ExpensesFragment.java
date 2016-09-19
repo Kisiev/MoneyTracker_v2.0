@@ -26,24 +26,24 @@ public class ExpensesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootview = inflater.inflate(R.layout.expenses_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.expenses_fragment, container, false);
 
-        recyclerView = (RecyclerView) rootview.findViewById(R.id.list_of_expenses);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_expenses);
         expensesAdapter = new ExpensesAdapter(getExpenses());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(expensesAdapter);
-        return rootview;
+        return rootView;
     }
 
     private List<ExpenseModel> getExpenses()
     {
         List<ExpenseModel> expense = new ArrayList<>();
-        expense.add(new ExpenseModel("books", "120"));
-        expense.add(new ExpenseModel("books", "120"));
-        expense.add(new ExpenseModel("books", "120"));
-        expense.add(new ExpenseModel("books", "120"));
-        expense.add(new ExpenseModel("books", "120"));
-        expense.add(new ExpenseModel("books", "120"));
+        expense.add(new ExpenseModel("books", "1"));
+        expense.add(new ExpenseModel("books", "2"));
+        expense.add(new ExpenseModel("books", "3"));
+        expense.add(new ExpenseModel("books", "4"));
+        expense.add(new ExpenseModel("books", "5"));
+        expense.add(new ExpenseModel("books", "6"));
         return expense;
     }
 }

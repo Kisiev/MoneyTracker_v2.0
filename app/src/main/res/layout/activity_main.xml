@@ -10,6 +10,8 @@
     tools:openDrawer="start"
     tools:context=".UI.MainActivity">
 
+
+
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,7 +48,10 @@
         android:layout_gravity="start"
         android:id="@+id/navigation_view"
         android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_main"
 
-        app:menu="@menu/activity_main_drawer"/>
+        app:menu="@menu/activity_main_drawer">
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

@@ -1,6 +1,7 @@
 package money.android.bignerdranch.com.moneytracker.UI;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity
         switch (id)
         {
             case R.id.spendItem:
-                Intent intent = new Intent(MainActivity.this, ExpensesFragment.class);
-                startActivity(intent);
+                ExpensesFragment ef = new ExpensesFragment();
+                replaceFragment(ef);
                 break;
             case R.id.categoryItem:
                 break;
