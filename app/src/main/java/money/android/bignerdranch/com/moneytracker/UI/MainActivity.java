@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolTitel = (TextView) findViewById(R.id.header_drawer);
         saveInst = savedInstanceState;
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null)
         {
             replaceFragment(new ExpensesFragment());
+            toolTitel.setText("Траты");
         }
 
 
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        toolTitel = (TextView) findViewById(R.id.header_drawer);
+
         switch (id)
         {
             case R.id.spendItem:
