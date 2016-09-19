@@ -38,12 +38,26 @@ public class ExpensesFragment extends Fragment {
     private List<ExpenseModel> getExpenses()
     {
         List<ExpenseModel> expense = new ArrayList<>();
-        expense.add(new ExpenseModel("books", "1"));
-        expense.add(new ExpenseModel("books", "2"));
-        expense.add(new ExpenseModel("books", "3"));
-        expense.add(new ExpenseModel("books", "4"));
-        expense.add(new ExpenseModel("books", "5"));
-        expense.add(new ExpenseModel("books", "6"));
+        expense.add(new ExpenseModel("Книги", "10"));
+        expense.add(new ExpenseModel("Тетради", "256"));
+        expense.add(new ExpenseModel("Ручки", "35"));
+        expense.add(new ExpenseModel("Карандаши", "478"));
+        expense.add(new ExpenseModel("Бумага", "564"));
+        expense.add(new ExpenseModel("Книги", "10"));
+        expense.add(new ExpenseModel("Тетради", "256"));
+        expense.add(new ExpenseModel("Ручки", "35"));
+        expense.add(new ExpenseModel("Карандаши", "478"));
+        expense.add(new ExpenseModel("Бумага", "564"));
+        expense.add(new ExpenseModel("Книги", "10"));
+        expense.add(new ExpenseModel("Тетради", "256"));
+        expense.add(new ExpenseModel("Ручки", "35"));
+        expense.add(new ExpenseModel("Карандаши", "478"));
+        expense.add(new ExpenseModel("Бумага", "564"));
+        expense.add(new ExpenseModel("Книги", "10"));
+        expense.add(new ExpenseModel("Тетради", "256"));
+        expense.add(new ExpenseModel("Ручки", "35"));
+        expense.add(new ExpenseModel("Карандаши", "478"));
+        expense.add(new ExpenseModel("Бумага", "564"));
         return expense;
     }
 }

@@ -34,7 +34,6 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
     @Override
     public void onBindViewHolder(ExpensesHolder holder, int position) {
         ExpenseModel expenseModel = expensesList.get(position);
-        Log.d("myf", String.valueOf(expenseModel.getName()));
         holder.name.setText(expenseModel.getName());
         holder.price.setText(expenseModel.getPrice());
     }

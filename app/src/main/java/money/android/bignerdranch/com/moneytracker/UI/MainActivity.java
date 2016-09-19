@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
 import money.android.bignerdranch.com.moneytracker.R;
 
@@ -110,6 +111,8 @@ public class MainActivity extends AppCompatActivity
                 replaceFragment(ef);
                 break;
             case R.id.categoryItem:
+                CategoryFragment cf = new CategoryFragment();
+                replaceFragment(cf);
                 break;
             case R.id.statItem:
                 break;
