@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity
     protected Toolbar toolbar;
     protected DrawerLayout drawer;
     protected NavigationView navigationView;
+    TextView toolTitel;
     public static final String TAG = "myLog";
 
     @Override
@@ -109,10 +111,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.spendItem:
                 ExpensesFragment ef = new ExpensesFragment();
                 replaceFragment(ef);
+                toolTitel = (TextView) findViewById(R.id.header_drawer);
+                toolTitel.setText("Траты");
                 break;
             case R.id.categoryItem:
                 CategoryFragment cf = new CategoryFragment();
                 replaceFragment(cf);
+                toolTitel.setText("Категории");
                 break;
             case R.id.statItem:
                 break;
