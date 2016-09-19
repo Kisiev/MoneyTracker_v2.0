@@ -3,6 +3,7 @@ package money.android.bignerdranch.com.moneytracker.UI;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,8 @@ import android.widget.TextView;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
 import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.UI.fragments.SettingFragment;
+import money.android.bignerdranch.com.moneytracker.UI.fragments.StatisticFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     protected DrawerLayout drawer;
     protected NavigationView navigationView;
     TextView toolTitel;
+    Bundle saveInst;
     public static final String TAG = "myLog";
 
     @Override
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        saveInst = savedInstanceState;
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -52,6 +56,8 @@ public class MainActivity extends AppCompatActivity
         {
             replaceFragment(new ExpensesFragment());
         }
+
+
     }
     private void replaceFragment(Fragment fragment) {
           String backStackName = fragment.getClass().getName();
@@ -105,13 +111,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        toolTitel = (TextView) findViewById(R.id.header_drawer);
         switch (id)
         {
             case R.id.spendItem:
                 ExpensesFragment ef = new ExpensesFragment();
                 replaceFragment(ef);
-                toolTitel = (TextView) findViewById(R.id.header_drawer);
                 toolTitel.setText("Траты");
                 break;
             case R.id.categoryItem:
@@ -120,8 +125,14 @@ public class MainActivity extends AppCompatActivity
                 toolTitel.setText("Категории");
                 break;
             case R.id.statItem:
+                StatisticFragment sf = new StatisticFragment();
+                replaceFragment(sf);
+                toolTitel.setText("Статистики");
                 break;
             case R.id.settingItem:
+                SettingFragment setf = new SettingFragment();
+                replaceFragment(setf);
+                toolTitel.setText("Настройки");
                 break;
             case R.id.exitItem:
                 break;
@@ -162,4 +173,5 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "onResume");
         super.onResume();
     }
+
 }

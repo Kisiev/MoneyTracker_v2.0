@@ -13,4 +13,6 @@
     <string name="name">Валерий Кисиев</string>
     <string name="Email">kisivaleri@gmail.com</string>
     <string name="hello_world">Hello World!</string>
+    <string name="setting_fragment">setting_fragment</string>
+    <string name="statistic_fragment">statistic_fragment</string>
 </resources>
