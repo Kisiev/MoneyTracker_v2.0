@@ -15,4 +15,8 @@
     <string name="hello_world">Hello World!</string>
     <string name="setting_fragment">setting_fragment</string>
     <string name="statistic_fragment">statistic_fragment</string>
+    <string name="expenses_header_nav">Траты</string>
+    <string name="category_header_nav">Категории</string>
+    <string name="statistic_header_nav">Статистика</string>
+    <string name="setting_header_nav">Настройки</string>
 </resources>

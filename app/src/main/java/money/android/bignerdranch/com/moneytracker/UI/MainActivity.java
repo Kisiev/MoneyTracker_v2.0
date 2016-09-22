@@ -60,6 +60,17 @@ public class MainActivity extends AppCompatActivity
             toolTitel.setText("Траты");
         }
 
+        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_container);
+                if (f != null)
+                {
+                    updateToolbarTitle(f);
+                } else
+                    f.onDestroy();
+            }
+        });
 
     }
     private void replaceFragment(Fragment fragment) {
@@ -77,6 +88,7 @@ public class MainActivity extends AppCompatActivity
                    ft.commit();
           }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -109,6 +121,35 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void updateToolbarTitle (Fragment fragment)
+    {
+        String fragmentClassName = fragment.getClass().getName();
+        TextView textView = (TextView) findViewById(R.id.header_drawer);
+        if (fragmentClassName.equals(ExpensesFragment.class.getName()))
+        {
+            textView.setText(getString(R.string.expenses_header_nav));
+            navigationView.setCheckedItem(R.id.spendItem);
+            Log.d("MAY", fragmentClassName);
+        }else
+        if (fragmentClassName.equals(CategoryFragment.class.getName()))
+        {
+            textView.setText(getString(R.string.category_header_nav));
+            navigationView.setCheckedItem(R.id.categoryItem);
+            Log.d("MAY",  fragmentClassName);
+        }else
+        if (fragmentClassName.equals(StatisticFragment.class.getName()))
+        {
+            textView.setText(getString(R.string.statistic_header_nav));
+            navigationView.setCheckedItem(R.id.statItem);
+        }else
+        if (fragmentClassName.equals(SettingFragment.class.getName()))
+        {
+            textView.setText(getString(R.string.setting_header_nav));
+            navigationView.setCheckedItem(R.id.settingItem);
+        }
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -120,22 +161,18 @@ public class MainActivity extends AppCompatActivity
             case R.id.spendItem:
                 ExpensesFragment ef = new ExpensesFragment();
                 replaceFragment(ef);
-                toolTitel.setText("Траты");
                 break;
             case R.id.categoryItem:
                 CategoryFragment cf = new CategoryFragment();
                 replaceFragment(cf);
-                toolTitel.setText("Категории");
                 break;
             case R.id.statItem:
                 StatisticFragment sf = new StatisticFragment();
                 replaceFragment(sf);
-                toolTitel.setText("Статистики");
                 break;
             case R.id.settingItem:
                 SettingFragment setf = new SettingFragment();
                 replaceFragment(setf);
-                toolTitel.setText("Настройки");
                 break;
             case R.id.exitItem:
                 break;
