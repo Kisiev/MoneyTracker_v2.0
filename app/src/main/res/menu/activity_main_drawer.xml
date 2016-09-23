@@ -14,14 +14,15 @@
             android:id="@+id/statItem"
             android:icon="@mipmap/statistic"
             android:title="@string/statistic"/>
+        <item
+            android:id="@+id/settingItem"
+            android:icon="@mipmap/setting"
+            android:title="@string/settings"/>
     </group>
 <item android:title="">
  <group android:checkableBehavior="single">
 <menu>
-            <item
-                android:id="@+id/settingItem"
-                android:icon="@mipmap/setting"
-                android:title="@string/settings"/>
+
             <item
                 android:id="@+id/exitItem"
                 android:icon="@mipmap/exit"

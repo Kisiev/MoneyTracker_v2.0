@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null)
         {
             replaceFragment(new ExpensesFragment());
-            toolTitel.setText("Траты");
+            setTitle("Траты");
         }
 
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -67,8 +67,7 @@ public class MainActivity extends AppCompatActivity
                 if (f != null)
                 {
                     updateToolbarTitle(f);
-                } else
-                    f.onDestroy();
+                } else onBackPressed();
             }
         });
 
@@ -128,24 +127,22 @@ public class MainActivity extends AppCompatActivity
         TextView textView = (TextView) findViewById(R.id.header_drawer);
         if (fragmentClassName.equals(ExpensesFragment.class.getName()))
         {
-            textView.setText(getString(R.string.expenses_header_nav));
+            setTitle(getString(R.string.expenses_header_nav));
             navigationView.setCheckedItem(R.id.spendItem);
-            Log.d("MAY", fragmentClassName);
         }else
         if (fragmentClassName.equals(CategoryFragment.class.getName()))
         {
-            textView.setText(getString(R.string.category_header_nav));
+            setTitle(getString(R.string.category_header_nav));
             navigationView.setCheckedItem(R.id.categoryItem);
-            Log.d("MAY",  fragmentClassName);
         }else
         if (fragmentClassName.equals(StatisticFragment.class.getName()))
         {
-            textView.setText(getString(R.string.statistic_header_nav));
+            setTitle(getString(R.string.statistic_header_nav));
             navigationView.setCheckedItem(R.id.statItem);
         }else
         if (fragmentClassName.equals(SettingFragment.class.getName()))
         {
-            textView.setText(getString(R.string.setting_header_nav));
+            setTitle(getString(R.string.setting_header_nav));
             navigationView.setCheckedItem(R.id.settingItem);
         }
     }
@@ -154,6 +151,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        if (drawer != null) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
         int id = item.getItemId();
 
         switch (id)
