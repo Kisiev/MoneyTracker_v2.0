@@ -2,6 +2,8 @@ package money.android.bignerdranch.com.moneytracker.UI.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +23,7 @@ import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
 /**
  * Created by User on 19.09.2016.
  */
-public class CategoryFragment extends Fragment {
+public class CategoryFragment extends Fragment implements View.OnClickListener{
 
     RecyclerView recyclerView;
     CategoryAdapter categoryAdapter;
@@ -35,19 +37,30 @@ public class CategoryFragment extends Fragment {
         categoryAdapter = new CategoryAdapter(getCategory());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(categoryAdapter);
-
+        onClick(rootView);
         return rootView;
     }
 
     private List<CategoryModel> getCategory()
     {
         List<CategoryModel> category = new ArrayList<>();
-        category.add(new CategoryModel("Категоря 1"));
-        category.add(new CategoryModel("Категоря 2"));
-        category.add(new CategoryModel("Категоря 3"));
-        category.add(new CategoryModel("Категоря 4"));
-        category.add(new CategoryModel("Категоря 5"));
-        category.add(new CategoryModel("Категоря 6"));
+        category.add(new CategoryModel("Категория 1"));
+        category.add(new CategoryModel("Категория 2"));
+        category.add(new CategoryModel("Категория 3"));
+        category.add(new CategoryModel("Категория 4"));
+        category.add(new CategoryModel("Категория 5"));
+        category.add(new CategoryModel("Категория 6"));
         return category;
+    }
+
+    @Override
+    public void onClick(View view) {
+        FloatingActionButton actionButton = (FloatingActionButton) view.findViewById(R.id.categoryActionButton);
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, getString(R.string.category), Snackbar.LENGTH_LONG).show();
+            }
+        });
     }
 }

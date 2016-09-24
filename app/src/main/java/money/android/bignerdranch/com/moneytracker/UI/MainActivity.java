@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.LocaleList;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,7 +19,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Choreographer;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity
     protected Toolbar toolbar;
     protected DrawerLayout drawer;
     protected NavigationView navigationView;
-    TextView toolTitel;
+    protected TextView toolTitel;
     Bundle saveInst;
     public static final String TAG = "myLog";
 
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -71,7 +77,9 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
     }
+
     private void replaceFragment(Fragment fragment) {
           String backStackName = fragment.getClass().getName();
 

@@ -3,9 +3,12 @@ package money.android.bignerdranch.com.moneytracker.UI.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +20,7 @@ import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
 import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
 
-public class ExpensesFragment extends Fragment {
+public class ExpensesFragment extends Fragment implements View.OnClickListener{
 
     RecyclerView recyclerView;
     ExpensesAdapter expensesAdapter;
@@ -32,6 +35,7 @@ public class ExpensesFragment extends Fragment {
         expensesAdapter = new ExpensesAdapter(getExpenses());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(expensesAdapter);
+        onClick(rootView);
         return rootView;
     }
 
@@ -59,5 +63,17 @@ public class ExpensesFragment extends Fragment {
         expense.add(new ExpenseModel("Карандаши", "478"));
         expense.add(new ExpenseModel("Бумага", "564"));
         return expense;
+    }
+
+    @Override
+    public void onClick(View view) {
+        FloatingActionButton actionButton = (FloatingActionButton) view.findViewById(R.id.expensesActionButton);
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, getString(R.string.spends), Snackbar.LENGTH_LONG).show();
+                Log.d("Ex", "fab");
+            }
+        });
     }
 }
