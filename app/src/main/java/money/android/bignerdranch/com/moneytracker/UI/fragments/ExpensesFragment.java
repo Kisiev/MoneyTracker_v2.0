@@ -24,6 +24,7 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
 
     RecyclerView recyclerView;
     ExpensesAdapter expensesAdapter;
+    FloatingActionButton actionButton;
 
     @Nullable
     @Override
@@ -36,6 +37,8 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(expensesAdapter);
         onClick(rootView);
+
+
         return rootView;
     }
 
@@ -67,12 +70,11 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        FloatingActionButton actionButton = (FloatingActionButton) view.findViewById(R.id.expensesActionButton);
+        actionButton = (FloatingActionButton) view.findViewById(R.id.expensesActionButton);
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, getString(R.string.spends), Snackbar.LENGTH_LONG).show();
-                Log.d("Ex", "fab");
             }
         });
     }
