@@ -19,4 +19,5 @@
     <string name="category_header_nav">Категории</string>
     <string name="statistic_header_nav">Статистика</string>
     <string name="setting_header_nav">Настройки</string>
+    <string name="fabBehaviorPack">money.android.bignerdranch.com.moneytracker.UI.utils.ScrollingFABBehavior</string>
 </resources>
