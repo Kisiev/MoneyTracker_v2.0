@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity
     protected Toolbar toolbar;
     protected DrawerLayout drawer;
     protected NavigationView navigationView;
-    protected TextView toolTitel;
     Bundle saveInst;
     public static final String TAG = "myLog";
 
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolTitel = (TextView) findViewById(R.id.header_drawer);
         saveInst = savedInstanceState;
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -134,7 +132,6 @@ public class MainActivity extends AppCompatActivity
     private void updateToolbarTitle (Fragment fragment)
     {
         String fragmentClassName = fragment.getClass().getName();
-        TextView textView = (TextView) findViewById(R.id.header_drawer);
         if (fragmentClassName.equals(ExpensesFragment.class.getName()))
         {
             setTitle(getString(R.string.expenses_header_nav));

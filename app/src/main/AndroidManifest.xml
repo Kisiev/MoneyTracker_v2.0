@@ -19,8 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".UI.utils.AddExpensesActivity_"
-                  android:parentActivityName=".UI.MainActivity">
-
+                  android:parentActivityName=".UI.MainActivity"
+                    android:label="@string/add_new_expenses">
         </activity>
     </application>
 

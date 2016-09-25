@@ -18,8 +18,13 @@
     <string name="expenses_header_nav">Траты</string>
     <string name="category_header_nav">Категории</string>
     <string name="statistic_header_nav">Статистика</string>
+    <string name="add_new_expenses">Добавит трату</string>
     <string name="setting_header_nav">Настройки</string>
     <string name="fabBehaviorPack">money.android.bignerdranch.com.moneytracker.UI.utils.ScrollingFABBehavior</string>
     <string name="cancel_expenses_button">Отмена</string>
     <string name="ok_expenses_button">OK</string>
+    <string name="sum_hint_expenses">Сумма</string>
+    <string name="desc_hint_expenses">Описание</string>
+    <string name="date_hint_expenses">Дата</string>
+    <string name="set_simbol_for_expenses_sum">1234567890.</string>
 </resources>
