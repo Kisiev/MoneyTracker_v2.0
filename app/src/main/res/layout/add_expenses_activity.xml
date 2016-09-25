@@ -9,35 +9,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/expenses_sum_et"
-        android:layout_marginTop="16dp"
-        android:digits="@string/set_simbol_for_expenses_sum"
-       android:hint="@string/sum_hint_expenses"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:inputType="number"
+        android:hint="@string/sum_hint_expenses"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"/>
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:maxLength="25"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:hint="@string/desc_hint_expenses"
         android:id="@+id/expenses_description_et"
-        android:layout_margin="16dp"/>
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:id="@+id/expenses_category_spinner"
-        android:layout_margin="16dp"/>
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/expenses_data_et"
-        android:layout_marginTop="16dp"
+        android:inputType="date"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:hint="@string/date_hint_expenses"
-        android:layout_margin="16dp"/>
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:orientation="horizontal">
         <Button
             android:layout_width="match_parent"
