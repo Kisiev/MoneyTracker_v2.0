@@ -1,9 +1,12 @@
 package money.android.bignerdranch.com.moneytracker.UI.utils;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +24,8 @@ import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
 
+import static money.android.bignerdranch.com.moneytracker.R.id.toolbar;
+
 @EActivity(R.layout.add_expenses_activity)
 public class AddExpensesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -34,6 +39,10 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
     Button cancelButton;
     @ViewById (R.id.expenses_ok_button)
     Button okButton;
+    @ViewById (R.id.expenses_data_et)
+    EditText date_et;
+    @ViewById (R.id.toolbar)
+    Toolbar toolbar;
 
     @AfterViews
     protected void main (){
@@ -53,7 +62,28 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
         // attaching data adapter to spinner
         listSpinner.setAdapter(dataAdapter);
 
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (sumEdit.getText().toString().equals("")
+                        || descEdit.getText().toString().equals("")
+                        || date_et.getText().toString().equals("")){
+                    Toast.makeText(AddExpensesActivity.this, "Не заполнены поля", Toast.LENGTH_LONG).show();
+                }
+                Snackbar.make(view, R.string.snacker_add_text, Snackbar.LENGTH_LONG).show();
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, R.string.snacker_cancel_text, Snackbar.LENGTH_LONG).show();
+                onBackPressed();
+            }
+        });
+
     }
+
+
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -68,4 +98,5 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
 }
