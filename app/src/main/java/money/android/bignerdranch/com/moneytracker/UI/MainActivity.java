@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null)
         {
             replaceFragment(new ExpensesFragment());
-            setTitle("Траты");
+            setTitle(getString(R.string.expenses_header_nav));
         }
 
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity
                 if (f != null)
                 {
                     updateToolbarTitle(f);
-                } else onBackPressed();
+                } else finish();
             }
         });
 

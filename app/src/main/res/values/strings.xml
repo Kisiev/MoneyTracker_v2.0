@@ -20,4 +20,6 @@
     <string name="statistic_header_nav">Статистика</string>
     <string name="setting_header_nav">Настройки</string>
     <string name="fabBehaviorPack">money.android.bignerdranch.com.moneytracker.UI.utils.ScrollingFABBehavior</string>
+    <string name="cancel_expenses_button">Отмена</string>
+    <string name="ok_expenses_button">OK</string>
 </resources>
