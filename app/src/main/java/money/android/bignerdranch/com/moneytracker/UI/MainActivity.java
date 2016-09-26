@@ -1,5 +1,6 @@
 package money.android.bignerdranch.com.moneytracker.UI;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,8 +23,11 @@ import android.view.Choreographer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.androidannotations.annotations.ViewById;
 
 import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
@@ -56,8 +60,6 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-
-
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -79,7 +81,6 @@ public class MainActivity extends AppCompatActivity
                 } else finish();
             }
         });
-
 
 
     }
@@ -123,12 +124,14 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id){
+            case R.id.action_settings:
+                Toast.makeText(MainActivity.this, "Нажата кнопка ActionSetting", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                return true;
         }
-
+        //noinspection SimplifiableIfStatement
         return super.onOptionsItemSelected(item);
     }
 
