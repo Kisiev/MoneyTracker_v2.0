@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,7 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
     EditText date_et;
     @ViewById (R.id.toolbar)
     Toolbar toolbar;
+
 
     @AfterViews
     protected void main (){

@@ -197,31 +197,26 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onStart() {
-        Log.d(TAG, "onStart");
         super.onStart();
     }
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause");
         super.onPause();
     }
 
     @Override
     protected void onRestart() {
-        Log.d(TAG, "onRestart");
         super.onRestart();
     }
 
     @Override
     protected void onStop() {
-        Log.d(TAG, "onStop");
         super.onStop();
     }
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume");
         super.onResume();
     }
 
