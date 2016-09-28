@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,7 +21,11 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
@@ -44,10 +49,15 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
     EditText date_et;
     @ViewById (R.id.toolbar)
     Toolbar toolbar;
-
+    @ViewById (R.id.expenses_data_et)
+    EditText dateEdit;
 
     @AfterViews
     protected void main (){
+
+        long date = System.currentTimeMillis();
+        dateEdit.setText(new SimpleDateFormat("dd.MM.yyyy").format(date));
+
         List<String> categories = new ArrayList<String>();
         categories.add("Категория 1");
         categories.add("Категория 2");

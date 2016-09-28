@@ -24,10 +24,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.androidannotations.annotations.ViewById;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
@@ -37,6 +41,7 @@ import money.android.bignerdranch.com.moneytracker.UI.fragments.StatisticFragmen
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
 
     protected Toolbar toolbar;
     protected DrawerLayout drawer;
@@ -81,6 +86,7 @@ public class MainActivity extends AppCompatActivity
                 } else finish();
             }
         });
+
 
 
     }
