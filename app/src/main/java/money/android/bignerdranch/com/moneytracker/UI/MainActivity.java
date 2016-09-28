@@ -1,14 +1,17 @@
 package money.android.bignerdranch.com.moneytracker.UI;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.LocaleList;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,8 +23,15 @@ import android.view.Choreographer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.androidannotations.annotations.ViewById;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
@@ -32,10 +42,10 @@ import money.android.bignerdranch.com.moneytracker.UI.fragments.StatisticFragmen
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     protected Toolbar toolbar;
     protected DrawerLayout drawer;
     protected NavigationView navigationView;
-    protected TextView toolTitel;
     Bundle saveInst;
     public static final String TAG = "myLog";
 
@@ -43,17 +53,17 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolTitel = (TextView) findViewById(R.id.header_drawer);
         saveInst = savedInstanceState;
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -63,7 +73,7 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null)
         {
             replaceFragment(new ExpensesFragment());
-            setTitle("Траты");
+            setTitle(getString(R.string.expenses_header_nav));
         }
 
         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
@@ -73,9 +83,10 @@ public class MainActivity extends AppCompatActivity
                 if (f != null)
                 {
                     updateToolbarTitle(f);
-                } else onBackPressed();
+                } else finish();
             }
         });
+
 
 
     }
@@ -119,12 +130,14 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id){
+            case R.id.action_settings:
+                Toast.makeText(MainActivity.this, "Нажата кнопка ActionSetting", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                return true;
         }
-
+        //noinspection SimplifiableIfStatement
         return super.onOptionsItemSelected(item);
     }
 
@@ -132,7 +145,6 @@ public class MainActivity extends AppCompatActivity
     private void updateToolbarTitle (Fragment fragment)
     {
         String fragmentClassName = fragment.getClass().getName();
-        TextView textView = (TextView) findViewById(R.id.header_drawer);
         if (fragmentClassName.equals(ExpensesFragment.class.getName()))
         {
             setTitle(getString(R.string.expenses_header_nav));
@@ -194,31 +206,26 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onStart() {
-        Log.d(TAG, "onStart");
         super.onStart();
     }
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause");
         super.onPause();
     }
 
     @Override
     protected void onRestart() {
-        Log.d(TAG, "onRestart");
         super.onRestart();
     }
 
     @Override
     protected void onStop() {
-        Log.d(TAG, "onStop");
         super.onStop();
     }
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume");
         super.onResume();
     }
 

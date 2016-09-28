@@ -19,16 +19,19 @@
             android:icon="@mipmap/setting"
             android:title="@string/settings"/>
     </group>
-<item android:title="">
- <group android:checkableBehavior="single">
-<menu>
 
+
+
+        <item android:title="">
+<menu>
             <item
                 android:id="@+id/exitItem"
                 android:icon="@mipmap/exit"
-                android:title="@string/exit"/>
+                android:title="@string/exit"
+                />
+
 </menu>
-</group>
-</item>
+        </item>
+
     </menu>
 
