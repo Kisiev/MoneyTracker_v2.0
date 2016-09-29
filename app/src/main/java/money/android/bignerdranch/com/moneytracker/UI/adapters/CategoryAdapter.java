@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.zip.Inflater;
 
 import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.models.CategoryModel;
 import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
 
@@ -18,9 +19,9 @@ import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
  */
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryHolder>{
 
-    private List<CategoryModel> categoryList;
+    private List<CategoryEntity> categoryList;
 
-    public CategoryAdapter (List<CategoryModel> categoryList){
+    public CategoryAdapter (List<CategoryEntity> categoryList){
         this.categoryList = categoryList;
     }
 
@@ -33,8 +34,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(CategoryHolder holder, int position) {
-       CategoryModel categoryModel = categoryList.get(position);
-        holder.categoryName.setText(categoryModel.getCategoryName());
+        CategoryEntity categoryModel = categoryList.get(position);
+        holder.categoryName.setText(categoryModel.getName());
     }
 
     @Override

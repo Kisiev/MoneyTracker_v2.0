@@ -3,7 +3,10 @@ package money.android.bignerdranch.com.moneytracker.entitys;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
 
+import java.util.List;
 import java.util.jar.Attributes;
 
 /**
@@ -11,6 +14,8 @@ import java.util.jar.Attributes;
  */
 @Table(name = "expenses")
 public class ExpensesEntity extends Model{
+
+
 
 
     @Column(name = "sum")
@@ -25,14 +30,6 @@ public class ExpensesEntity extends Model{
     public ExpensesEntity(){
         super();
     }
-    public ExpensesEntity(String sum, String name, String date, CategoryEntity category){
-        super();
-        this.sum = sum;
-        this.name = name;
-        this.date = date;
-        this.category = category;
-    }
-
 
     public String getSum() {
         return sum;
@@ -46,8 +43,32 @@ public class ExpensesEntity extends Model{
         return date;
     }
 
+    public void setSum(String sum) {
+        this.sum = sum;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
+    }
     public CategoryEntity getCategory() {
         return category;
+    }
+
+    public static List<ExpensesEntity> selectAll(){
+        return new Select().from(ExpensesEntity.class).execute();
+
+    }
+
+    public static List<ExpensesEntity> deleteAll(){
+        return new Delete().from(ExpensesEntity.class).execute();
     }
 
 }

@@ -34,7 +34,7 @@ public class CategoryFragment extends Fragment implements View.OnClickListener{
 
         View rootView = inflater.inflate(R.layout.category_fragment, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_category);
-        categoryAdapter = new CategoryAdapter(getCategory());
+       // categoryAdapter = new CategoryAdapter(getCategory());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(categoryAdapter);
         onClick(rootView);

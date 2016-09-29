@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
 
 /**
@@ -18,9 +19,9 @@ import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
 public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.ExpensesHolder>{
 
 
-    private List<ExpenseModel> expensesList;
+    private List<ExpensesEntity> expensesList;
 
-    public ExpensesAdapter(List<ExpenseModel> expensesList){
+    public ExpensesAdapter(List<ExpensesEntity> expensesList){
         this.expensesList = expensesList;
     }
 
@@ -33,9 +34,9 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
 
     @Override
     public void onBindViewHolder(ExpensesHolder holder, int position) {
-        ExpenseModel expenseModel = expensesList.get(position);
+        ExpensesEntity expenseModel = expensesList.get(position);
         holder.name.setText(expenseModel.getName());
-        holder.price.setText(expenseModel.getPrice());
+        holder.price.setText(expenseModel.getSum());
     }
 
     @Override

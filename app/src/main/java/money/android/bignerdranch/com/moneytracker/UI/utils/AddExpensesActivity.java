@@ -1,12 +1,17 @@
 package money.android.bignerdranch.com.moneytracker.UI.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -29,7 +34,12 @@ import java.util.Date;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.UI.MainActivity;
+import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
+import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
+import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
+import static money.android.bignerdranch.com.moneytracker.R.id.main_container;
 import static money.android.bignerdranch.com.moneytracker.R.id.toolbar;
 
 @EActivity(R.layout.add_expenses_activity)
@@ -81,21 +91,43 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
                         || descEdit.getText().toString().equals("")
                         || date_et.getText().toString().equals("")){
                     Toast.makeText(AddExpensesActivity.this, "Не заполнены поля", Toast.LENGTH_LONG).show();
+                } else {
+                    addExpenses();
+                    sumEdit.setText("");
+                    descEdit.setText("");
+                    listSpinner.setSelection(0);
                 }
-                Snackbar.make(view, R.string.snacker_add_text, Snackbar.LENGTH_LONG).show();
+
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, R.string.snacker_cancel_text, Snackbar.LENGTH_LONG).show();
                 onBackPressed();
             }
         });
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
+
+    private void addExpenses(){
+        ExpensesEntity expensesEntity = new ExpensesEntity();
+        expensesEntity.setSum(sumEdit.getText().toString());
+        expensesEntity.setName(descEdit.getText().toString());
+        expensesEntity.setDate(date_et.getText().toString());
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setName(listSpinner.getSelectedItem().toString());
+        categoryEntity.save();
+        expensesEntity.setCategory(categoryEntity);
+        expensesEntity.save();
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

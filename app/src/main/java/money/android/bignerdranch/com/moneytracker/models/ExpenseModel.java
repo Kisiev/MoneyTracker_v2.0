@@ -16,6 +16,7 @@ public class ExpenseModel {
         return name;
     }
 
+
     public String getPrice() {
         return price;
     }

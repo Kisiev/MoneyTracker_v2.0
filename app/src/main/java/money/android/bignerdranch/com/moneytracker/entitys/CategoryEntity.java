@@ -3,6 +3,7 @@ package money.android.bignerdranch.com.moneytracker.entitys;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 import java.util.List;
 
@@ -18,16 +19,19 @@ public class CategoryEntity extends Model{
     public CategoryEntity(){
         super();
     }
-    public CategoryEntity(String name){
-        super();
-        this.name = name;
-    }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<ExpensesEntity> expenses(){
         return getMany(ExpensesEntity.class, "category");
+    }
+    public List<CategoryEntity> selectAll(){
+        return new Select().from(CategoryEntity.class).execute();
     }
 }
