@@ -3,8 +3,10 @@ package money.android.bignerdranch.com.moneytracker.entitys;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,12 +16,16 @@ import java.util.List;
 @Table(name = "categories")
 public class CategoryEntity extends Model{
     @Column(name = "name")
-    public String name;
+    public  String name;
 
     public CategoryEntity(){
         super();
     }
 
+    public CategoryEntity(String name) {
+        super();
+        this.name = name;
+    }
     public String getName() {
         return name;
     }
@@ -31,7 +37,11 @@ public class CategoryEntity extends Model{
     public List<ExpensesEntity> expenses(){
         return getMany(ExpensesEntity.class, "category");
     }
-    public List<CategoryEntity> selectAll(){
+    public static List<CategoryEntity> selectAll(){
         return new Select().from(CategoryEntity.class).execute();
+    }
+
+    public static List<CategoryEntity> deleteAll(){
+        return new Delete().from(CategoryEntity.class).execute();
     }
 }

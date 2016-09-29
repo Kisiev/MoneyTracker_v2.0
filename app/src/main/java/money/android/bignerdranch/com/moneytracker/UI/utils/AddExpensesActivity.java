@@ -1,19 +1,7 @@
 package money.android.bignerdranch.com.moneytracker.UI.utils;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,21 +14,13 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
-import money.android.bignerdranch.com.moneytracker.UI.MainActivity;
-import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
-
-import static money.android.bignerdranch.com.moneytracker.R.id.main_container;
-import static money.android.bignerdranch.com.moneytracker.R.id.toolbar;
 
 @EActivity(R.layout.add_expenses_activity)
 public class AddExpensesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -62,21 +42,31 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
     @ViewById (R.id.expenses_data_et)
     EditText dateEdit;
 
+    private void addExpenses(){
+        ExpensesEntity expensesEntity = new ExpensesEntity();
+        expensesEntity.setSum(sumEdit.getText().toString());
+        expensesEntity.setName(descEdit.getText().toString());
+        expensesEntity.setDate(date_et.getText().toString());
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setName(listSpinner.getSelectedItem().toString());
+        categoryEntity.save();
+        expensesEntity.setCategory(categoryEntity);
+        expensesEntity.save();
+    }
+
+    private List<CategoryEntity> categories() {
+
+        return CategoryEntity.selectAll();
+    }
+
     @AfterViews
     protected void main (){
 
         long date = System.currentTimeMillis();
         dateEdit.setText(new SimpleDateFormat("dd.MM.yyyy").format(date));
 
-        List<String> categories = new ArrayList<String>();
-        categories.add("Категория 1");
-        categories.add("Категория 2");
-        categories.add("Категория 3");
-        categories.add("Категория 4");
-        categories.add("Категория 5");
-        categories.add("Категория 6");
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter <String>(this, android.R.layout.simple_spinner_item, categories);
+        ArrayAdapter<CategoryEntity> dataAdapter = new ArrayAdapter <CategoryEntity>(this, android.R.layout.simple_spinner_item, categories());
 
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -104,6 +94,7 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void onClick(View view) {
                 onBackPressed();
+
             }
         });
 
@@ -112,22 +103,10 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
 
-    private void addExpenses(){
-        ExpensesEntity expensesEntity = new ExpensesEntity();
-        expensesEntity.setSum(sumEdit.getText().toString());
-        expensesEntity.setName(descEdit.getText().toString());
-        expensesEntity.setDate(date_et.getText().toString());
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setName(listSpinner.getSelectedItem().toString());
-        categoryEntity.save();
-        expensesEntity.setCategory(categoryEntity);
-        expensesEntity.save();
-    }
+
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

@@ -22,6 +22,10 @@
                   android:parentActivityName=".UI.MainActivity"
                     android:label="@string/add_new_expenses">
         </activity>
+        <activity android:name=".UI.utils.AddCategoryActivity_"
+                  android:parentActivityName=".UI.MainActivity"
+                  android:label="@string/add_category_header">
+        </activity>
         <activity android:name=".UI.SplashActivity_"
             android:theme="@style/CardView.Dark">
             <intent-filter>

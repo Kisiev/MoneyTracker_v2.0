@@ -48,7 +48,6 @@ public class ExpensesFragment extends Fragment implements LoaderManager.LoaderCa
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_expenses);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         actionButton = (FloatingActionButton)  rootView.findViewById(R.id.expensesActionButton);
-        getLoaderManager().restartLoader(ID, null, this);
         return rootView;
     }
 
@@ -58,7 +57,7 @@ public class ExpensesFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onStart() {
         super.onStart();
-
+        getLoaderManager().restartLoader(ID, null, this);
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +88,5 @@ public class ExpensesFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoaderReset(Loader<List<ExpensesEntity>> loader) {
-
     }
 }
