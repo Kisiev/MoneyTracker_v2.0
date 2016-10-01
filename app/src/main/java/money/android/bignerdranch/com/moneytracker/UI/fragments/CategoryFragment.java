@@ -33,7 +33,11 @@ import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
  */
 public class CategoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<CategoryEntity>>{
 
-    RecyclerView recyclerView;
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
+    private RecyclerView recyclerView;
     CategoryAdapter categoryAdapter;
     FloatingActionButton actionButton;
     final public static int ID = 1;

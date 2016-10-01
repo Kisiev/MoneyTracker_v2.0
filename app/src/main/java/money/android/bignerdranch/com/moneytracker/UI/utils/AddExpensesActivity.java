@@ -1,9 +1,12 @@
 package money.android.bignerdranch.com.moneytracker.UI.utils;
 
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,11 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.UI.adapters.CategoriesSpinnerAdapter;
+import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
+import money.android.bignerdranch.com.moneytracker.UI.adapters.CategoryAdapter;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
 @EActivity(R.layout.add_expenses_activity)
-public class AddExpensesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddExpensesActivity extends AppCompatActivity {
 
     @ViewById (R.id.expenses_sum_et)
     EditText sumEdit;
@@ -54,10 +60,7 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
         expensesEntity.save();
     }
 
-    private List<CategoryEntity> categories() {
 
-        return CategoryEntity.selectAll();
-    }
 
     @AfterViews
     protected void main (){
@@ -66,13 +69,16 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
         dateEdit.setText(new SimpleDateFormat("dd.MM.yyyy").format(date));
 
 
-        ArrayAdapter<CategoryEntity> dataAdapter = new ArrayAdapter <CategoryEntity>(this, android.R.layout.simple_spinner_item, categories());
+        List addCategoryList = new ArrayList<>();
+        addCategoryList.addAll(CategoryEntity.selectAll());
 
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // attaching data adapter to spinner
-        listSpinner.setAdapter(dataAdapter);
+        CategoriesSpinnerAdapter categories = new CategoriesSpinnerAdapter(this, addCategoryList);
+
+        categories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categories.notifyDataSetChanged();
+        listSpinner.setAdapter(categories);
+
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,20 +112,5 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
     }
 
 
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String item = adapterView.getItemAtPosition(i).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(adapterView.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 
 }

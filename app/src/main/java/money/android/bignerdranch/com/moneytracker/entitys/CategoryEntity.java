@@ -6,7 +6,6 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +25,8 @@ public class CategoryEntity extends Model{
         super();
         this.name = name;
     }
+
+
     public String getName() {
         return name;
     }
@@ -37,8 +38,15 @@ public class CategoryEntity extends Model{
     public List<ExpensesEntity> expenses(){
         return getMany(ExpensesEntity.class, "category");
     }
+
     public static List<CategoryEntity> selectAll(){
-        return new Select().from(CategoryEntity.class).execute();
+        return  new Select().from(CategoryEntity.class).execute();
+    }
+
+    public static List<CategoryEntity> selectAllInner(){
+        ExpensesEntity f = new ExpensesEntity();
+        CategoryEntity f1 = new CategoryEntity();
+        return  new Select().from(ExpensesEntity.class).execute();
     }
 
     public static List<CategoryEntity> deleteAll(){
