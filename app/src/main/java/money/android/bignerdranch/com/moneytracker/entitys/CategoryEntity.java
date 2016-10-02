@@ -43,11 +43,10 @@ public class CategoryEntity extends Model{
         return  new Select().from(CategoryEntity.class).execute();
     }
 
-    public static List<CategoryEntity> selectAllInner(){
-        ExpensesEntity f = new ExpensesEntity();
-        CategoryEntity f1 = new CategoryEntity();
-        return  new Select().from(ExpensesEntity.class).execute();
+    public static CategoryEntity selectAllInner(String name){
+        return  new Select("categories.id").from(ExpensesEntity.class).innerJoin(CategoryEntity.class).on("expenses.category = ?", name).executeSingle();
     }
+
 
     public static List<CategoryEntity> deleteAll(){
         return new Delete().from(CategoryEntity.class).execute();

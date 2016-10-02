@@ -40,6 +40,7 @@ public class CategoryFragment extends Fragment implements LoaderManager.LoaderCa
     private RecyclerView recyclerView;
     CategoryAdapter categoryAdapter;
     FloatingActionButton actionButton;
+
     final public static int ID = 1;
     @Nullable
     @Override
@@ -53,6 +54,8 @@ public class CategoryFragment extends Fragment implements LoaderManager.LoaderCa
 
         return rootView;
     }
+
+
 
 
     @Override

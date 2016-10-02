@@ -6,6 +6,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -53,11 +54,10 @@ public class AddExpensesActivity extends AppCompatActivity {
         expensesEntity.setSum(sumEdit.getText().toString());
         expensesEntity.setName(descEdit.getText().toString());
         expensesEntity.setDate(date_et.getText().toString());
-        CategoryEntity categoryEntity = new CategoryEntity();
-        categoryEntity.setName(listSpinner.getSelectedItem().toString());
-        categoryEntity.save();
-        expensesEntity.setCategory(categoryEntity);
+        CategoryEntity category = (CategoryEntity) listSpinner.getSelectedItem();
+        expensesEntity.setCategory(category);
         expensesEntity.save();
+
     }
 
 

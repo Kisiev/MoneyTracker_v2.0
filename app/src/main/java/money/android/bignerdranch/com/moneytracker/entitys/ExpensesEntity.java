@@ -67,6 +67,7 @@ public class ExpensesEntity extends Model{
 
     }
 
+
     public static List<ExpensesEntity> deleteAll(){
         return new Delete().from(ExpensesEntity.class).execute();
     }
