@@ -15,6 +15,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
@@ -22,15 +25,14 @@ import java.util.zip.Inflater;
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.CategoryAdapter;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddCategoryActivity;
+import money.android.bignerdranch.com.moneytracker.UI.utils.AddCategoryActivity;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddCategoryActivity_;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 import money.android.bignerdranch.com.moneytracker.models.CategoryModel;
 import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
 
-/**
- * Created by User on 19.09.2016.
- */
+
 public class CategoryFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<CategoryEntity>>{
 
     public RecyclerView getRecyclerView() {

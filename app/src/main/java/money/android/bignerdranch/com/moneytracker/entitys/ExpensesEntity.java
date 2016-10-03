@@ -62,11 +62,12 @@ public class ExpensesEntity extends Model{
         return category;
     }
 
-    public static List<ExpensesEntity> selectAll(){
-        return new Select().from(ExpensesEntity.class).execute();
+    public static List<ExpensesEntity> selectAll(String quary){
+        return new Select().from(ExpensesEntity.class)
+                .where("name LIKE?", new String[] {"%" + quary + "%"})
+                .execute();
 
     }
-
 
     public static List<ExpensesEntity> deleteAll(){
         return new Delete().from(ExpensesEntity.class).execute();
