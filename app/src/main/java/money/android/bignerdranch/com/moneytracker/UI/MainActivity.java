@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        if (CategoryEntity.selectAll().size() == 0){
+        if (CategoryEntity.selectAll("").size() == 0){
             addCategory("Продукты");
             addCategory("Техника");
             addCategory("Одежда");

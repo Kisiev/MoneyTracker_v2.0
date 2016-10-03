@@ -70,7 +70,7 @@ public class AddExpensesActivity extends AppCompatActivity {
 
 
         List addCategoryList = new ArrayList<>();
-        addCategoryList.addAll(CategoryEntity.selectAll());
+        addCategoryList.addAll(CategoryEntity.selectAll(""));
 
 
         CategoriesSpinnerAdapter categories = new CategoriesSpinnerAdapter(this, addCategoryList);

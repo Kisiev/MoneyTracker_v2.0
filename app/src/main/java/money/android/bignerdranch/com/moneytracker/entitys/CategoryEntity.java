@@ -39,8 +39,10 @@ public class CategoryEntity extends Model{
         return getMany(ExpensesEntity.class, "category");
     }
 
-    public static List<CategoryEntity> selectAll(){
-        return  new Select().from(CategoryEntity.class).execute();
+    public static List<CategoryEntity> selectAll(String query){
+        return  new Select().from(CategoryEntity.class)
+                .where("name LIKE?", new String[] {"%" + query + "%"})
+                .execute();
     }
 
     public static CategoryEntity selectAllInner(String name){
