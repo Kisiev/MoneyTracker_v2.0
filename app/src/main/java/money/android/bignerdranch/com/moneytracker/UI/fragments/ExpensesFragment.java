@@ -29,7 +29,7 @@ import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddExpensesActivity_;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
-import money.android.bignerdranch.com.moneytracker.rest.ExpenseModel;
+
 
 @EFragment
 public class ExpensesFragment extends Fragment {

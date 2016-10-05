@@ -13,12 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/password_et"
+        android:inputType="textPassword"
+        android:maxLength="30"
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:hint="@string/password"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
+        android:textStyle="normal"
+        android:maxLength="30"
         android:text="@string/registration_button_text"
         android:id="@+id/signin_btn"
         android:layout_gravity="center"/>

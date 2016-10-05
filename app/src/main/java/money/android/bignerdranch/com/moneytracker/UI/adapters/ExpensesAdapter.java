@@ -10,7 +10,7 @@ import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
-import money.android.bignerdranch.com.moneytracker.rest.ExpenseModel;
+
 
 /**
  * Created by User on 18.09.2016.

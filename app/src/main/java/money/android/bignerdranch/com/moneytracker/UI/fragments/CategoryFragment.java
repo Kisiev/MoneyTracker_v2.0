@@ -27,8 +27,6 @@ import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.CategoryAdapter;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddCategoryActivity_;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
-import money.android.bignerdranch.com.moneytracker.rest.CategoryModel;
-import money.android.bignerdranch.com.moneytracker.rest.ExpenseModel;
 
 @EFragment
 public class CategoryFragment extends Fragment {
