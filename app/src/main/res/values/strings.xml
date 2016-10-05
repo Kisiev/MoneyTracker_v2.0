@@ -33,4 +33,8 @@
     <string name="category_toast">Не заполнено поле</string>
     <string name="category_text">Категория</string>
     <string name="action_search">Поиск</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="registration_button_text">Зарегистрироваться</string>
+    <string name="reg_user_header">Регистрация пользователя</string>
 </resources>

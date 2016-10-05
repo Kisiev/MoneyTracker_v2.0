@@ -26,6 +26,13 @@
                   android:parentActivityName=".UI.MainActivity"
                   android:label="@string/add_category_header">
         </activity>
+
+        <activity android:name=".UI.RegistratioActivity_"
+            android:parentActivityName=".UI.MainActivity"
+            android:label="@string/reg_user_header">
+
+        </activity>
+
         <activity android:name=".UI.SplashActivity_"
             android:theme="@style/CardView.Dark">
             <intent-filter>
