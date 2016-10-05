@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -18,24 +17,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.api.BackgroundExecutor;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.CategoryAdapter;
-import money.android.bignerdranch.com.moneytracker.UI.utils.AddCategoryActivity;
-import money.android.bignerdranch.com.moneytracker.UI.utils.AddCategoryActivity;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddCategoryActivity_;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
-import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
-import money.android.bignerdranch.com.moneytracker.models.CategoryModel;
-import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
+import money.android.bignerdranch.com.moneytracker.rest.CategoryModel;
+import money.android.bignerdranch.com.moneytracker.rest.ExpenseModel;
 
 @EFragment
 public class CategoryFragment extends Fragment {

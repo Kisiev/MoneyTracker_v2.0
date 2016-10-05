@@ -7,12 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
-import money.android.bignerdranch.com.moneytracker.models.CategoryModel;
-import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
+import money.android.bignerdranch.com.moneytracker.rest.CategoryModel;
+import money.android.bignerdranch.com.moneytracker.rest.ExpenseModel;
 
 /**
  * Created by User on 19.09.2016.
