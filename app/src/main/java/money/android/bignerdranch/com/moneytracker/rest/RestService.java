@@ -1,7 +1,10 @@
 package money.android.bignerdranch.com.moneytracker.rest;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 
+import java.io.EOFException;
 import java.io.IOException;
 
 import money.android.bignerdranch.com.moneytracker.rest.registration.UserRegistrationModel;
@@ -19,10 +22,13 @@ public final class RestService {
     }
 
     public UserRegistrationModel register (@NonNull String login,
-                                           @NonNull String password) throws IOException{
+                                           @NonNull String password) throws Exception {
+
         return restClient.getRegisterUserApi()
                 .registerUser(login, password, REGISTER_FLAG)
                 .execute().body();
+
     }
+
 
 }

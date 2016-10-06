@@ -21,6 +21,7 @@ import android.widget.SearchView;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.api.BackgroundExecutor;
 
 import java.util.List;

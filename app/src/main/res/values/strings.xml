@@ -40,4 +40,5 @@
     <string name="registerNON">Пользователь с таким логином уже существует</string>
     <string name="login_lenght">Логин должен содержать не менее 5 символов и не более 10</string>
     <string name="pass_lenght">Пароль не должен быть пустым</string>
+    <string name="errorNet">Нет подключения к интернету</string>
 </resources>
