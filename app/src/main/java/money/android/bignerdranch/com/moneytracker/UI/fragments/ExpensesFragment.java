@@ -68,6 +68,7 @@ public class ExpensesFragment extends Fragment {
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setQueryHint(getString(R.string.action_search));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String s) {
                 expensesQuery(s);
