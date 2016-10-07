@@ -1,27 +1,25 @@
 package money.android.bignerdranch.com.moneytracker.UI;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-import java.io.IOException;
-
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.rest.RestService;
-import money.android.bignerdranch.com.moneytracker.rest.registration.UserRegistrationModel;
-import okhttp3.logging.HttpLoggingInterceptor;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserRegistrationModel;
 
 @EActivity(R.layout.registration_activity)
 public class RegistratioActivity extends AppCompatActivity{
@@ -31,10 +29,17 @@ public class RegistratioActivity extends AppCompatActivity{
     EditText login;
     @ViewById(R.id.password_et)
     EditText pass;
+    @ViewById(R.id.confirm_password_et)
+    EditText confirm_pass;
     @ViewById (R.id.signin_btn)
     Button signIn;
+    @ViewById(R.id.checked_ch)
+    CheckBox register_ch;
+    @ViewById(R.id.liner)
+    LinearLayout liner;
 
     private UserRegistrationModel userRegistrationModel = null;
+    private Animation animation;
     @Background
     public void register(View view){
 
@@ -74,6 +79,7 @@ public class RegistratioActivity extends AppCompatActivity{
 
     @AfterViews
     public void main(){
+        animation = AnimationUtils.loadAnimation(this, R.anim.trans);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,5 +95,20 @@ public class RegistratioActivity extends AppCompatActivity{
 
             }
         });
+
+        register_ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (register_ch.isChecked()) {
+                    confirm_pass.setVisibility(View.VISIBLE);
+                    signIn.setText(getString(R.string.registration_button_text));
+                } else {
+                    confirm_pass.setVisibility(View.GONE);
+                    signIn.setText(getString(R.string.logIn_button_text));
+                }
+
+            }
+        });
+
     }
 }

@@ -35,8 +35,10 @@
     <string name="action_search">Поиск</string>
     <string name="login">login</string>
     <string name="password">password</string>
+    <string name="confirm_password">confirm password</string>
     <string name="registration_button_text">Зарегистрироваться</string>
-    <string name="reg_user_header">Регистрация пользователя</string>
+    <string name="logIn_button_text">Войти</string>
+    <string name="reg_user_header">Авторизация</string>
     <string name="registerNON">Пользователь с таким логином уже существует</string>
     <string name="login_lenght">Логин должен содержать не менее 5 символов и не более 10</string>
     <string name="pass_lenght">Пароль не должен быть пустым</string>
