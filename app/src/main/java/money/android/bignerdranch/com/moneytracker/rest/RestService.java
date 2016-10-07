@@ -20,9 +20,9 @@ public final class RestService {
     }
 
     public UserRegistrationModel register (@NonNull String login,
-                                           @NonNull String password) throws Exception {
+                                           @NonNull String password) throws IOException {
 
-        return restClient.getLoftScoolApi()
+        return restClient.getLoftSchoolApi()
                 .registerUser(login, password, REGISTER_FLAG)
                 .execute().body();
 
@@ -30,7 +30,7 @@ public final class RestService {
 
     public UserLoginModel login (@NonNull String login,
                                  @NonNull String password) throws IOException{
-        return restClient.getLoftScoolApi()
+        return restClient.getLoftSchoolApi()
                 .login(login, password)
                 .execute().body();
     }

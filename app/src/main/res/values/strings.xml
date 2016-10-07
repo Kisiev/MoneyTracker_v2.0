@@ -43,4 +43,6 @@
     <string name="login_lenght">Логин должен содержать не менее 5 символов и не более 10</string>
     <string name="pass_lenght">Пароль не должен быть пустым</string>
     <string name="errorNet">Нет подключения к интернету</string>
+    <string name="confirmError">Пароль и подтверждение разные</string>
+    <string name="wrong_login">Не верное имя пользователя или пароль</string>
 </resources>

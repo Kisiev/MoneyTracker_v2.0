@@ -6,11 +6,8 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-/**
- * Created by User on 07.10.2016.
- */
 
-public interface LoftScoolApi {
+public interface LoftSchoolApi {
     @GET("/auth")
     Call<UserRegistrationModel> registerUser (@Query("login")String login,
                                               @Query("password") String password,

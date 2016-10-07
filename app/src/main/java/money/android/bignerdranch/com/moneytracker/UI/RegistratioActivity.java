@@ -18,6 +18,9 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
 import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.UI.utils.ConstantsManager;
+import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserLoginModel;
 import money.android.bignerdranch.com.moneytracker.rest.RestService;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserRegistrationModel;
 
@@ -35,11 +38,10 @@ public class RegistratioActivity extends AppCompatActivity{
     Button signIn;
     @ViewById(R.id.checked_ch)
     CheckBox register_ch;
-    @ViewById(R.id.liner)
-    LinearLayout liner;
+
 
     private UserRegistrationModel userRegistrationModel = null;
-    private Animation animation;
+    private UserLoginModel userLoginModel = null;
     @Background
     public void register(View view){
 
@@ -56,14 +58,13 @@ public class RegistratioActivity extends AppCompatActivity{
        // Log.d(LOG_OUT, "Status" + userRegistrationModel.getStatus());
 
 
-
     if (exep == false)
         switch (userRegistrationModel.getStatus().toString()){
-            case "success":
+            case ConstantsManager.REGISTRATION_SUCCEED:
                 finish();
                 startActivity(new Intent(RegistratioActivity.this, MainActivity.class));
                 break;
-            case "Login busy already":
+            case ConstantsManager.LOGIN_BUSY:
                 Snackbar.make(view, getString(R.string.registerNON), Snackbar.LENGTH_LONG).show();
                 break;
             case "null":
@@ -75,23 +76,62 @@ public class RegistratioActivity extends AppCompatActivity{
 
     }
 
+    @Background
+    public void login(View view){
 
+        RestService restService = new RestService();
+        boolean exep = false;
+
+        try {
+            userLoginModel = restService.login(login.getText().toString(), pass.getText().toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Snackbar.make(view, R.string.errorNet, Snackbar.LENGTH_LONG).show();
+            exep = true;
+        }
+        // Log.d(LOG_OUT, "Status" + userRegistrationModel.getStatus());
+
+
+        if (exep == false)
+            switch (userLoginModel.getStatus().toString()){
+                case ConstantsManager.LOGIN_SUCCEED:
+                    MoneyTrackerAplication.seveAuthToken(userLoginModel.getAuthToken());
+                    finish();
+                    startActivity(new Intent(RegistratioActivity.this, MainActivity.class));
+                    break;
+                case ConstantsManager.WRONG_LOGIN:
+                    Snackbar.make(view, R.string.wrong_login, Snackbar.LENGTH_LONG).show();
+                    break;
+                case "null":
+                    Snackbar.make(view, R.string.errorNet, Snackbar.LENGTH_LONG).show();
+                default:
+                    return;
+
+            }
+
+    }
 
     @AfterViews
     public void main(){
-        animation = AnimationUtils.loadAnimation(this, R.anim.trans);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                    if (login.getText().length() < 10 && login.getText().length() > 5 && pass.getText().length() > 0)
+                if(register_ch.isChecked()) {
+                    if (login.getText().length() < 10 && login.getText().length() > 5 && pass.getText().length() > 0 && confirm_pass.getText() == pass.getText())
                         register(view);
                     else {
-                        if (pass.getText().length() < 1)
+                        if (pass.getText().length() == 0)
                             Snackbar.make(view, R.string.pass_lenght, Snackbar.LENGTH_LONG).show();
-                        else
+                        else if (login.getText().length() > 10 || login.getText().length() < 5)
                             Snackbar.make(view, R.string.login_lenght, Snackbar.LENGTH_LONG).show();
+                        else if (confirm_pass.getText() != pass.getText())
+                            Snackbar.make(view, R.string.confirmError, Snackbar.LENGTH_LONG).show();
                     }
+
+                } else {
+                        login(view);
+                }
 
             }
         });

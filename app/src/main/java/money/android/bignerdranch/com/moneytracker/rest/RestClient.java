@@ -1,7 +1,6 @@
 package money.android.bignerdranch.com.moneytracker.rest;
 
 
-import money.android.bignerdranch.com.moneytracker.rest.Models.RegisterUserApi;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -11,7 +10,7 @@ public class RestClient {
 
     public static final String BASE_NAME = "http://lmt.loftblog.tmweb.ru/";
 
-    private LoftScoolApi loftScoolApi;
+    private LoftSchoolApi loftSchoolApi;
 
     public RestClient (){
 
@@ -30,10 +29,10 @@ public class RestClient {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-        loftScoolApi = retrofit.create(LoftScoolApi.class);
+        loftSchoolApi = retrofit.create(LoftSchoolApi.class);
     }
 
-    public LoftScoolApi getLoftScoolApi() {
-        return loftScoolApi;
+    public LoftSchoolApi getLoftSchoolApi() {
+        return loftSchoolApi;
     }
 }
