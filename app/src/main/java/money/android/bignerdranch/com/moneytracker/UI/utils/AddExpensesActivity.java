@@ -1,16 +1,13 @@
 package money.android.bignerdranch.com.moneytracker.UI.utils;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,19 +18,19 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
-
-import static money.android.bignerdranch.com.moneytracker.R.id.toolbar;
+import money.android.bignerdranch.com.moneytracker.UI.adapters.CategoriesSpinnerAdapter;
+import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
+import money.android.bignerdranch.com.moneytracker.UI.adapters.CategoryAdapter;
+import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
+import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
 @EActivity(R.layout.add_expenses_activity)
-public class AddExpensesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddExpensesActivity extends AppCompatActivity {
 
     @ViewById (R.id.expenses_sum_et)
     EditText sumEdit;
@@ -52,27 +49,36 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
     @ViewById (R.id.expenses_data_et)
     EditText dateEdit;
 
+    private void addExpenses(){
+        ExpensesEntity expensesEntity = new ExpensesEntity();
+        expensesEntity.setSum(sumEdit.getText().toString());
+        expensesEntity.setName(descEdit.getText().toString());
+        expensesEntity.setDate(date_et.getText().toString());
+        CategoryEntity category = (CategoryEntity) listSpinner.getSelectedItem();
+        expensesEntity.setCategory(category);
+        expensesEntity.save();
+
+    }
+
+
+
     @AfterViews
     protected void main (){
 
         long date = System.currentTimeMillis();
         dateEdit.setText(new SimpleDateFormat("dd.MM.yyyy").format(date));
 
-        List<String> categories = new ArrayList<String>();
-        categories.add("Категория 1");
-        categories.add("Категория 2");
-        categories.add("Категория 3");
-        categories.add("Категория 4");
-        categories.add("Категория 5");
-        categories.add("Категория 6");
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter <String>(this, android.R.layout.simple_spinner_item, categories);
+        List addCategoryList = new ArrayList<>();
+        addCategoryList.addAll(CategoryEntity.selectAll());
 
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        // attaching data adapter to spinner
-        listSpinner.setAdapter(dataAdapter);
+        CategoriesSpinnerAdapter categories = new CategoriesSpinnerAdapter(this, addCategoryList);
+
+        categories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categories.notifyDataSetChanged();
+        listSpinner.setAdapter(categories);
+
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,34 +87,30 @@ public class AddExpensesActivity extends AppCompatActivity implements AdapterVie
                         || descEdit.getText().toString().equals("")
                         || date_et.getText().toString().equals("")){
                     Toast.makeText(AddExpensesActivity.this, "Не заполнены поля", Toast.LENGTH_LONG).show();
+                } else {
+                    addExpenses();
+                    sumEdit.setText("");
+                    descEdit.setText("");
+                    listSpinner.setSelection(0);
                 }
-                Snackbar.make(view, R.string.snacker_add_text, Snackbar.LENGTH_LONG).show();
+
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, R.string.snacker_cancel_text, Snackbar.LENGTH_LONG).show();
                 onBackPressed();
+
             }
         });
 
     }
 
-
-
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String item = adapterView.getItemAtPosition(i).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(adapterView.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
 
 }

@@ -32,12 +32,14 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.SettingFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.StatisticFragment;
+import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -88,9 +90,21 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+        if (CategoryEntity.selectAll().size() == 0){
+            addCategory("Продукты");
+            addCategory("Техника");
+            addCategory("Одежда");
+            addCategory("Канцтовары");
+            addCategory("Прочее");
+        }
 
     }
+    private void addCategory(String name){
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setName(name);
+        categoryEntity.save();
 
+    }
     private void replaceFragment(Fragment fragment) {
           String backStackName = fragment.getClass().getName();
 

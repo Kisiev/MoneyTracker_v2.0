@@ -29,4 +29,7 @@
     <string name="set_simbol_for_expenses_sum">1234567890.</string>
     <string name="snacker_add_text">Нажата кнопка добавить</string>
     <string name="snacker_cancel_text">Нажата кнопка Отмена</string>
+    <string name="add_category_header">Добавит категорию</string>
+    <string name="category_toast">Не заполнено поле</string>
+    <string name="category_text">Категория</string>
 </resources>

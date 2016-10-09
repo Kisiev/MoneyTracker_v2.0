@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,15 +28,17 @@ import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.MainActivity;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddExpensesActivity_;
+import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
+import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
 
-public class ExpensesFragment extends Fragment implements View.OnClickListener{
+public class ExpensesFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<ExpensesEntity>>{
 
     RecyclerView recyclerView;
     ExpensesAdapter expensesAdapter;
     FloatingActionButton actionButton;
     Toolbar toolbar;
-
+    final public static int ID = 1;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,45 +46,18 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
         View rootView = inflater.inflate(R.layout.expenses_fragment, container, false);
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_expenses);
-        expensesAdapter = new ExpensesAdapter(getExpenses());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(expensesAdapter);
-        onClick(rootView);
-
-
+        actionButton = (FloatingActionButton)  rootView.findViewById(R.id.expensesActionButton);
         return rootView;
     }
 
-    private List<ExpenseModel> getExpenses()
-    {
-        List<ExpenseModel> expense = new ArrayList<>();
-        expense.add(new ExpenseModel("Книги", "10"));
-        expense.add(new ExpenseModel("Тетради", "256"));
-        expense.add(new ExpenseModel("Ручки", "35"));
-        expense.add(new ExpenseModel("Карандаши", "478"));
-        expense.add(new ExpenseModel("Бумага", "564"));
-        expense.add(new ExpenseModel("Книги", "10"));
-        expense.add(new ExpenseModel("Тетради", "256"));
-        expense.add(new ExpenseModel("Ручки", "35"));
-        expense.add(new ExpenseModel("Карандаши", "478"));
-        expense.add(new ExpenseModel("Бумага", "564"));
-        expense.add(new ExpenseModel("Книги", "10"));
-        expense.add(new ExpenseModel("Тетради", "256"));
-        expense.add(new ExpenseModel("Ручки", "35"));
-        expense.add(new ExpenseModel("Карандаши", "478"));
-        expense.add(new ExpenseModel("Бумага", "564"));
-        expense.add(new ExpenseModel("Книги", "10"));
-        expense.add(new ExpenseModel("Тетради", "256"));
-        expense.add(new ExpenseModel("Ручки", "35"));
-        expense.add(new ExpenseModel("Карандаши", "478"));
-        expense.add(new ExpenseModel("Бумага", "564"));
-        return expense;
-    }
+
 
 
     @Override
-    public void onClick(View view) {
-        actionButton = (FloatingActionButton) view.findViewById(R.id.expensesActionButton);
+    public void onStart() {
+        super.onStart();
+        getLoaderManager().restartLoader(ID, null, this);
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,4 +68,25 @@ public class ExpensesFragment extends Fragment implements View.OnClickListener{
         });
     }
 
+
+    @Override
+    public Loader<List<ExpensesEntity>> onCreateLoader(int id, Bundle args) {
+        final AsyncTaskLoader<List<ExpensesEntity>> loader = new AsyncTaskLoader<List<ExpensesEntity>>(getActivity()) {
+            @Override
+            public List<ExpensesEntity> loadInBackground() {
+                return ExpensesEntity.selectAll();
+            }
+        };
+        loader.forceLoad();
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<ExpensesEntity>> loader, List<ExpensesEntity> data) {
+        recyclerView.setAdapter(new ExpensesAdapter(data));
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<ExpensesEntity>> loader) {
+    }
 }
