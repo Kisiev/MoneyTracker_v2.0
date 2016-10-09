@@ -41,6 +41,7 @@ import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.SettingFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.StatisticFragment;
+import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 
 public class MainActivity extends AppCompatActivity
@@ -188,6 +189,9 @@ public class MainActivity extends AppCompatActivity
                 replaceFragment(setf);
                 break;
             case R.id.exitItem:
+                MoneyTrackerAplication.seveAuthToken("");
+                startActivity(new Intent(this, RegistratioActivity_.class));
+                finish();
                 break;
             default:
                 return false;

@@ -11,6 +11,7 @@
         android:id="@+id/expenses_sum_et"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:inputType="numberSigned"
+        android:maxLength="10"
         android:hint="@string/sum_hint_expenses"
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/activity_horizontal_margin"/>
