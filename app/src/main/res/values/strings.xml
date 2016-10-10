@@ -40,9 +40,14 @@
     <string name="logIn_button_text">Войти</string>
     <string name="reg_user_header">Авторизация</string>
     <string name="registerNON">Пользователь с таким логином уже существует</string>
-    <string name="login_lenght">Логин должен содержать не менее 5 символов и не более 10</string>
+    <string name="login_lenght">Логин и парль должены содержать не менее 5 символов и не более 10</string>
     <string name="pass_lenght">Пароль не должен быть пустым</string>
     <string name="errorNet">Нет подключения к интернету</string>
     <string name="confirmError">Пароль и подтверждение разные</string>
     <string name="wrong_login">Не верное имя пользователя или пароль</string>
+    <string name="success_reg">Регистрация усшешно завершена!</string>
+    <string name="error">Неизвестная ошибка</string>
+    <string name="empty_login">Логин не может быть пустым</string>
+    <string name="empty_pass">Пароль не может быть пустым</string>
+    <string name="empty_log_pass">Логин или пароль не может быть равен NULL</string>
 </resources>

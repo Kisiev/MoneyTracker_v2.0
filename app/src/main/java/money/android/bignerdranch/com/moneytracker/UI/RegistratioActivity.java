@@ -1,8 +1,16 @@
 package money.android.bignerdranch.com.moneytracker.UI;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.media.VolumeProviderCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,12 +22,20 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.IOException;
+
+import money.android.bignerdranch.com.moneytracker.BuildConfig;
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.utils.ConstantsManager;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
@@ -28,142 +44,174 @@ import money.android.bignerdranch.com.moneytracker.rest.RestService;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserRegistrationModel;
 
 @EActivity(R.layout.registration_activity)
-public class RegistratioActivity extends AppCompatActivity{
+public class RegistratioActivity extends AppCompatActivity {
 
     final public static String LOG_OUT = "my_log";
     @ViewById(R.id.login_et)
-    EditText login;
+    EditText loginEt;
     @ViewById(R.id.password_et)
     EditText pass;
     @ViewById(R.id.confirm_password_et)
     EditText confirm_pass;
-    @ViewById (R.id.signin_btn)
+    @ViewById(R.id.signin_btn)
     Button signIn;
     @ViewById(R.id.checked_ch)
     CheckBox register_ch;
+    @ViewById(R.id.reg_layout)
+    LinearLayout linearLayout;
 
 
-    private UserRegistrationModel userRegistrationModel;
-    private UserLoginModel userLoginModel;
+
+
     @Background
-    public void register(View view){
-
+    public void register(String login, String password) {
         RestService restService = new RestService();
-        boolean exep = false;
 
         try {
-            userRegistrationModel = restService.register(login.getText().toString(), pass.getText().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Snackbar.make(view, R.string.errorNet, Snackbar.LENGTH_LONG).show();
-            exep = true;
-        }
-       // Log.d(LOG_OUT, "Status" + userRegistrationModel.getStatus());
-
-
-    if (exep == false)
-        switch (userRegistrationModel.getStatus().toString()){
-            case ConstantsManager.REGISTRATION_SUCCEED:
-                Snackbar.make(view, "Регистрация усшешно завершена!", Snackbar.LENGTH_LONG).show();
-                checkOut();
-                break;
-            case ConstantsManager.LOGIN_BUSY:
-                Snackbar.make(view, getString(R.string.registerNON), Snackbar.LENGTH_LONG).show();
-                break;
-            case "null":
-                Snackbar.make(view, R.string.errorNet, Snackbar.LENGTH_LONG).show();
-            default:
-                return;
-
+            UserRegistrationModel registrationModel = restService.register(login, password);
+            if (registrationModel.getStatus().equals(ConstantsManager.REGISTRATION_SUCCEED)) {
+                navigateToReg();
+            } else {
+                loginBusy();
+            }
+        } catch (IOException e) {
+            showUnknownError();
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
         }
 
     }
 
     @Background
-    public void login(View view){
+    public void login(String login, String password) {
 
         RestService restService = new RestService();
-        boolean exep = false;
 
         try {
-             userLoginModel = restService.login(login.getText().toString(), pass.getText().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Snackbar.make(view, R.string.errorNet, Snackbar.LENGTH_LONG).show();
-            exep = true;
-        }
-        // Log.d(LOG_OUT, "Status" + userRegistrationModel.getStatus());
-
-
-        if (exep == false)
-            switch (userLoginModel.getStatus().toString()){
-                case ConstantsManager.LOGIN_SUCCEED:
-                    MoneyTrackerAplication.seveAuthToken(userLoginModel.getAuthToken());
-                    navigateToMain();
-                    break;
-                case ConstantsManager.WRONG_LOGIN:
-                    Snackbar.make(view, R.string.wrong_login, Snackbar.LENGTH_LONG).show();
-                    break;
-                case "null":
-                    Snackbar.make(view, R.string.errorNet, Snackbar.LENGTH_LONG).show();
-                default:
-                    return;
-
+            UserLoginModel userLoginModel = restService.login(login, password);
+            if (userLoginModel.getStatus().equals(ConstantsManager.LOGIN_SUCCEED)){
+                MoneyTrackerAplication.seveAuthToken(userLoginModel.getAuthToken());
+                navigateToMain();
+            } else {
+                wrongLogin();
             }
+        } catch (IOException e) {
+            showUnknownError();
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
     @UiThread
-    void navigateToMain(){
+    void wrongLogin() {
+        Snackbar.make(linearLayout, R.string.wrong_login, Snackbar.LENGTH_LONG).show();
+    }
+
+    @UiThread
+    void navigateToMain() {
         startActivity(new Intent(RegistratioActivity.this, MainActivity.class));
     }
+
     @UiThread
-    void checkOut(){
+    void navigateToReg() {
         register_ch.setChecked(false);
-        login.setText("");
+        loginEt.setText("");
         pass.setText("");
+        Snackbar.make(linearLayout, R.string.success_reg, Snackbar.LENGTH_LONG).show();
+    }
+
+    @UiThread
+    void loginBusy() {
+        Snackbar.make(linearLayout, R.string.registerNON, Snackbar.LENGTH_LONG).show();
+    }
+
+
+    @UiThread
+    void showUnknownError() {
+        Snackbar.make(linearLayout, R.string.error, Snackbar.LENGTH_LONG).show();
     }
 
 
     @AfterViews
-    public void main(){
+    public void main() {
+
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(register_ch.isChecked()) {
-
-                    if ((login.getText().length() < 10 && login.getText().length() > 5) && (pass.getText().length() > 0) && (confirm_pass.getText().toString().equals(pass.getText().toString())))
-                        register(view);
-                    else {
-                        if (pass.getText().length() == 0)
-                            Snackbar.make(view, R.string.pass_lenght, Snackbar.LENGTH_LONG).show();
-                        else if (login.getText().length() > 10 || login.getText().length() < 5)
-                            Snackbar.make(view, R.string.login_lenght, Snackbar.LENGTH_LONG).show();
-                        else if (!confirm_pass.getText().toString().equals(pass.getText().toString()))
-                            Snackbar.make(view, R.string.confirmError, Snackbar.LENGTH_LONG).show();
+                if (register_ch.isChecked()) {
+                    if (isNwConnected(RegistratioActivity.this)) {
+                        String login = loginEt.getText().toString();
+                        String password = pass.getText().toString();
+                        String confirm = confirm_pass.getText().toString();
+                        if (!TextUtils.isEmpty(login) && !TextUtils.isEmpty(password)) {
+                            if (login.length() >= 5 && password.length() >= 5 && login.length() <= 10) {
+                                if (confirm.equals(password)) {
+                                    register(login, password);
+                                } else {
+                                    Snackbar.make(linearLayout, R.string.confirmError, Snackbar.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Snackbar.make(linearLayout, R.string.login_lenght, Snackbar.LENGTH_LONG).show();
+                            }
+                        } else {
+                            if (TextUtils.isEmpty(login))
+                                Snackbar.make(linearLayout ,getString(R.string.empty_login), Snackbar.LENGTH_LONG).show(); //поле логин - пустое
+                            if (TextUtils.isEmpty(password))
+                                Snackbar.make(linearLayout ,getString(R.string.empty_pass), Snackbar.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Snackbar.make(linearLayout, R.string.errorNet, Snackbar.LENGTH_LONG).show(); //сообщаем, что интернета нет
                     }
 
                 } else {
-                        login(view);
+                    if (isNwConnected(RegistratioActivity.this)) {
+                        String login = loginEt.getText().toString();
+                        String password = pass.getText().toString();
+                        if (!TextUtils.isEmpty(login) && !TextUtils.isEmpty(password)) {
+                            login(login, password);
+                        } else {
+                            Snackbar.make(linearLayout, R.string.empty_log_pass, Snackbar.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Snackbar.make(linearLayout, R.string.errorNet, Snackbar.LENGTH_LONG).show();
+                    }
                 }
 
             }
+
         });
 
-        register_ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (register_ch.isChecked()) {
-                    confirm_pass.setVisibility(View.VISIBLE);
-                    signIn.setText(getString(R.string.registration_button_text));
-                } else {
+        register_ch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+                @Override
+                public void onCheckedChanged (CompoundButton compoundButton,boolean b){
+                    if (register_ch.isChecked()) {
+                        confirm_pass.setVisibility(View.VISIBLE);
+                        signIn.setText(getString(R.string.registration_button_text));
+                    } else {
                     confirm_pass.setVisibility(View.GONE);
                     signIn.setText(getString(R.string.logIn_button_text));
-                }
+                    }
 
-            }
+                }
         });
 
     }
+    public static boolean isNwConnected(Context context) {
+        if (context == null) {
+            return true;
+        }
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
+        if (nwInfo != null && nwInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
+    }
+
+
 }
