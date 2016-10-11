@@ -83,6 +83,7 @@ public class RegistratioActivity extends AppCompatActivity {
             UserRegistrationModel registrationModel = restService.register(login, password);
             if (registrationModel.getStatus().equals(ConstantsManager.REGISTRATION_SUCCEED)) {
                 navigateToReg();
+                finish();
             } else {
                 loginBusy();
             }
@@ -105,6 +106,7 @@ public class RegistratioActivity extends AppCompatActivity {
             if (userLoginModel.getStatus().equals(ConstantsManager.LOGIN_SUCCEED)){
                 MoneyTrackerAplication.seveAuthToken(userLoginModel.getAuthToken());
                 navigateToMain();
+                finish();
             } else {
                 wrongLogin();
             }
@@ -254,6 +256,7 @@ public class RegistratioActivity extends AppCompatActivity {
         if (token != null){
             MoneyTrackerAplication.seveGoogleAuthToken(token);
             navigateToMain();
+            finish();
         }
     }
 

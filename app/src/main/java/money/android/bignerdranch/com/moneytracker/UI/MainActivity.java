@@ -33,7 +33,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.Calendar;
@@ -205,9 +207,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.exitItem:
                 MoneyTrackerAplication.seveAuthToken("");
                 MoneyTrackerAplication.seveGoogleAuthToken("");
-
+                Intent intent = new Intent(this, RegistratioActivity_.class);
+                startActivity(intent);
                 finish();
-                startActivity(new Intent(this, RegistratioActivity_.class));
                 break;
             default:
                 return false;
@@ -216,6 +218,11 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+
+
 
     @Override
     protected void onStart() {
