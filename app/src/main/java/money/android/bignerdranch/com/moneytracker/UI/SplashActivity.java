@@ -21,7 +21,9 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
 
-                if (MoneyTrackerAplication.getAuthToken().equals("")) {
+                if (MoneyTrackerAplication.getGoogleAuthToken().equals("") && MoneyTrackerAplication.getAuthToken().equals("")) {
+                    Log.d("TOKEN", MoneyTrackerAplication.getAuthToken());
+                    Log.d("TOKEN", "GOOGLE" + MoneyTrackerAplication.getGoogleAuthToken());
                     startActivity(new Intent(SplashActivity.this, RegistratioActivity_.class));
                     finish();
                 } else {

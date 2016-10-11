@@ -26,4 +26,13 @@ public class MoneyTrackerAplication extends Application {
     public static String getAuthToken(){
         return sharedPreferences.getString(ConstantsManager.TOKEN_KEY, "");
     }
+
+    public static void seveGoogleAuthToken (String token){
+        sharedPreferences.edit().putString(ConstantsManager.GOOGLE_TOKEN_KEY, token).apply();
+    }
+
+    public static String getGoogleAuthToken(){
+        return sharedPreferences.getString(ConstantsManager.GOOGLE_TOKEN_KEY, "");
+    }
+
 }

@@ -204,8 +204,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.exitItem:
                 MoneyTrackerAplication.seveAuthToken("");
-                startActivity(new Intent(this, RegistratioActivity_.class));
+                MoneyTrackerAplication.seveGoogleAuthToken("");
+
                 finish();
+                startActivity(new Intent(this, RegistratioActivity_.class));
                 break;
             default:
                 return false;

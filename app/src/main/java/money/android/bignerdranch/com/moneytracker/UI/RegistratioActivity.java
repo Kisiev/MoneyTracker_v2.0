@@ -1,5 +1,7 @@
 package money.android.bignerdranch.com.moneytracker.UI;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -25,6 +27,11 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.androidannotations.annotations.AfterViews;
@@ -43,9 +50,12 @@ import money.android.bignerdranch.com.moneytracker.rest.Models.UserLoginModel;
 import money.android.bignerdranch.com.moneytracker.rest.RestService;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserRegistrationModel;
 
+import static android.R.attr.data;
+
 @EActivity(R.layout.registration_activity)
 public class RegistratioActivity extends AppCompatActivity {
 
+    final public static int REQUEST_CODE = 10;
     final public static String LOG_OUT = "my_log";
     @ViewById(R.id.login_et)
     EditText loginEt;
@@ -59,6 +69,8 @@ public class RegistratioActivity extends AppCompatActivity {
     CheckBox register_ch;
     @ViewById(R.id.reg_layout)
     LinearLayout linearLayout;
+    @ViewById (R.id.login_google)
+    SignInButton login_google_btn;
 
 
 
@@ -199,7 +211,52 @@ public class RegistratioActivity extends AppCompatActivity {
                 }
         });
 
+        login_google_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"}, false,
+                        null, null, null, null);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+
+
+
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+            logInWithGoogle(data);
+        }
+    }
+
+    @Background
+    void logInWithGoogle(Intent data){
+        String token = null;
+        final String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+        final String accountType = data.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE);
+
+        Account account = new Account(accountName, accountType);
+        try {
+            token = GoogleAuthUtil.getToken(this,account, ConstantsManager.SCOPES);
+
+        }
+        catch (UserRecoverableAuthException userAuthEx){
+            startActivityForResult(userAuthEx.getIntent(), REQUEST_CODE);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        } catch (GoogleAuthException e) {
+            Log.d(LOG_OUT, "Fatal Authorization Exception" + e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+        Log.d(LOG_OUT,"token"+ token);
+        if (token != null){
+            MoneyTrackerAplication.seveGoogleAuthToken(token);
+            navigateToMain();
+        }
+    }
+
     public static boolean isNwConnected(Context context) {
         if (context == null) {
             return true;
@@ -212,6 +269,7 @@ public class RegistratioActivity extends AppCompatActivity {
         }
         return false;
     }
+
 
 
 }
