@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="money.android.bignerdranch.com.moneytracker">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/moneylogo"
@@ -26,6 +27,13 @@
                   android:parentActivityName=".UI.MainActivity"
                   android:label="@string/add_category_header">
         </activity>
+
+        <activity android:name=".UI.RegistratioActivity_"
+            android:parentActivityName=".UI.MainActivity"
+            android:label="@string/reg_user_header">
+
+        </activity>
+
         <activity android:name=".UI.SplashActivity_"
             android:theme="@style/CardView.Dark">
             <intent-filter>

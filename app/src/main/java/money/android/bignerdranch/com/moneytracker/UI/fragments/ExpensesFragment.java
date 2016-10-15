@@ -1,12 +1,10 @@
 package money.android.bignerdranch.com.moneytracker.UI.fragments;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -14,37 +12,25 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.InjectMenu;
-import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
-import org.androidannotations.annotations.OptionsMenuItem;
-import org.androidannotations.annotations.ViewById;
 import org.androidannotations.api.BackgroundExecutor;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import money.android.bignerdranch.com.moneytracker.R;
-import money.android.bignerdranch.com.moneytracker.UI.MainActivity;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
-import money.android.bignerdranch.com.moneytracker.UI.utils.AddExpensesActivity;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddExpensesActivity_;
-import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
-import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
+
 
 @EFragment
 public class ExpensesFragment extends Fragment {
@@ -82,6 +68,7 @@ public class ExpensesFragment extends Fragment {
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setQueryHint(getString(R.string.action_search));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String s) {
                 expensesQuery(s);

@@ -1,7 +1,6 @@
 package money.android.bignerdranch.com.moneytracker.UI.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
-import money.android.bignerdranch.com.moneytracker.models.ExpenseModel;
+
 
 /**
  * Created by User on 18.09.2016.
