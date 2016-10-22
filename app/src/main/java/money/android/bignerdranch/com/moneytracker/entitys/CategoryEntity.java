@@ -8,9 +8,6 @@ import com.activeandroid.query.Select;
 
 import java.util.List;
 
-/**
- * Created by User on 28.09.2016.
- */
 
 @Table(name = "categories")
 public class CategoryEntity extends Model{

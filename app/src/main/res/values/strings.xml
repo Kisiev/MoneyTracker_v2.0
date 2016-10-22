@@ -50,4 +50,7 @@
     <string name="empty_login">Логин не может быть пустым</string>
     <string name="empty_pass">Пароль не может быть пустым</string>
     <string name="empty_log_pass">Логин или пароль не может быть равен NULL</string>
+
+    <string name="content_authority" translatable="false">com.loftschool.loftmoneytracker</string>
+    <string name="sync_account_type" translatable="false">loftmoneytracker.loftschool.com</string>
 </resources>

@@ -7,9 +7,6 @@ import java.io.IOException;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserLoginModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserRegistrationModel;
 
-/**
- * Created by User on 05.10.2016.
- */
 
 public final class RestService {
     private final static String REGISTER_FLAG = "1";
