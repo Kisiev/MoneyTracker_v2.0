@@ -50,6 +50,7 @@ import money.android.bignerdranch.com.moneytracker.UI.fragments.StatisticFragmen
 import money.android.bignerdranch.com.moneytracker.UI.utils.CircleTransform;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
+import money.android.bignerdranch.com.moneytracker.sync.TrackerSyncAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
 
-
+        TrackerSyncAdapter.initializeSyncAdapter(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         saveInst = savedInstanceState;
