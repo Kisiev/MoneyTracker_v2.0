@@ -13,6 +13,9 @@ public final class ConstantsManager {
     public static final String TOKEN_KEY = "token_key";
     public static final String GOOGLE_TOKEN_KEY = "google_token_key";
     public static final String LOGIN_SUCCEED = "success";
+    public static final String AVATAR = "avatar";
+    public static final String USER_NAME = "name";
+    public static final String USER_EMILE = "email";
     private final static String G_PLUS_SCOPE =
             "oauth2:https://www.googleapis.com/auth/plus.me";
     private final static String USERINFO_SCOPE =

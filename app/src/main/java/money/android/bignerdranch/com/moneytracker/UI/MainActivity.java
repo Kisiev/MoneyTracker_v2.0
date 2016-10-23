@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -38,6 +39,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +52,8 @@ import money.android.bignerdranch.com.moneytracker.UI.fragments.StatisticFragmen
 import money.android.bignerdranch.com.moneytracker.UI.utils.CircleTransform;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
+import money.android.bignerdranch.com.moneytracker.rest.RestService;
 import money.android.bignerdranch.com.moneytracker.sync.TrackerSyncAdapter;
 
 public class MainActivity extends AppCompatActivity
@@ -59,7 +63,12 @@ public class MainActivity extends AppCompatActivity
     protected Toolbar toolbar;
     protected DrawerLayout drawer;
     protected NavigationView navigationView;
+    protected TextView nameText;
+    protected TextView emileText;
+    UserGetDataModel userGetDataModel;
+    RestService restService = new RestService();
     Bundle saveInst;
+    ImageView avatar;
     public static final String TAG = "myLog";
 
     @Override
@@ -83,14 +92,13 @@ public class MainActivity extends AppCompatActivity
 
 
         View headerView = navigationView.getHeaderView(0);
-        ImageView avatar = (ImageView) headerView.findViewById(R.id.imageView);
+        avatar = (ImageView) headerView.findViewById(R.id.imageView);
+        nameText = (TextView) headerView.findViewById(R.id.name_text);
+        emileText = (TextView) headerView.findViewById(R.id.email_text);
 
-        Glide.with(this)
-                .load(R.mipmap.image)
-                .bitmapTransform(new CircleTransform(this))
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(avatar);
+
+                getParam();
+
 
         if (savedInstanceState == null)
         {
@@ -110,6 +118,7 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+
         if (CategoryEntity.selectAll("").size() == 0){
             addCategory("Продукты");
             addCategory("Техника");
@@ -119,6 +128,25 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+
+    public void getParam(){
+
+        if (!MoneyTrackerAplication.getGoogleAuthToken().equals("")) {
+            saveGlideParam(MoneyTrackerAplication.getGoogleAvatar());
+            nameText.setText(MoneyTrackerAplication.getUserName());
+            emileText.setText(MoneyTrackerAplication.getUserEmile());
+        }
+    }
+
+    private void saveGlideParam(String picture){
+
+        Glide.with(this)
+                .load(picture)
+                .bitmapTransform(new CircleTransform(this))
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(new BitmapImageViewTarget(avatar).getView());
+    }
+
     private void addCategory(String name){
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setName(name);
@@ -206,8 +234,8 @@ public class MainActivity extends AppCompatActivity
                 replaceFragment(setf);
                 break;
             case R.id.exitItem:
-                MoneyTrackerAplication.seveAuthToken("");
-                MoneyTrackerAplication.seveGoogleAuthToken("");
+                MoneyTrackerAplication.saveAuthToken("");
+                MoneyTrackerAplication.saveGoogleAuthToken("");
                 Intent intent = new Intent(this, RegistratioActivity_.class);
                 startActivity(intent);
                 finish();
@@ -220,34 +248,5 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-
-
-
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
 }

@@ -36,7 +36,6 @@ public class CategoryFragment extends Fragment {
     }
 
     private RecyclerView recyclerView;
-    CategoryAdapter categoryAdapter;
     FloatingActionButton actionButton;
     SearchView searchView;
     final public static int ID = 1;

@@ -19,7 +19,7 @@ public class MoneyTrackerAplication extends Application {
         sharedPreferences = getSharedPreferences(ConstantsManager.SHARED_PREF, MODE_PRIVATE);
     }
 
-    public static void seveAuthToken (String token){
+    public static void saveAuthToken (String token){
         sharedPreferences.edit().putString(ConstantsManager.TOKEN_KEY, token).apply();
     }
 
@@ -27,7 +27,7 @@ public class MoneyTrackerAplication extends Application {
         return sharedPreferences.getString(ConstantsManager.TOKEN_KEY, "");
     }
 
-    public static void seveGoogleAuthToken (String token){
+    public static void saveGoogleAuthToken (String token){
         sharedPreferences.edit().putString(ConstantsManager.GOOGLE_TOKEN_KEY, token).apply();
     }
 
@@ -35,4 +35,27 @@ public class MoneyTrackerAplication extends Application {
         return sharedPreferences.getString(ConstantsManager.GOOGLE_TOKEN_KEY, "");
     }
 
+    public static String getGoogleAvatar(){
+        return sharedPreferences.getString(ConstantsManager.AVATAR, "");
+    }
+
+    public static void saveGoogleAvatar (String url){
+        sharedPreferences.edit().putString(ConstantsManager.AVATAR, url).apply();
+    }
+
+    public static String getUserName(){
+        return sharedPreferences.getString(ConstantsManager.USER_NAME, "");
+    }
+
+    public static void saveGoogleUserName(String name){
+        sharedPreferences.edit().putString(ConstantsManager.USER_NAME, name).apply();
+    }
+
+    public static String getUserEmile(){
+        return sharedPreferences.getString(ConstantsManager.USER_EMILE, "");
+    }
+
+    public static void saveGoogleUserEmail(String emile){
+        sharedPreferences.edit().putString(ConstantsManager.USER_EMILE, emile).apply();
+    }
 }
