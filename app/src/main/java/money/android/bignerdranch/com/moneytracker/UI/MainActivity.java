@@ -53,6 +53,7 @@ import money.android.bignerdranch.com.moneytracker.UI.utils.CircleTransform;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncCategoriesModel;
 import money.android.bignerdranch.com.moneytracker.rest.RestService;
 import money.android.bignerdranch.com.moneytracker.sync.TrackerSyncAdapter;
 
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity
     protected TextView nameText;
     protected TextView emileText;
     UserGetDataModel userGetDataModel;
+    UserSyncCategoriesModel userSyncCategoriesModel;
     RestService restService = new RestService();
     Bundle saveInst;
     ImageView avatar;
@@ -119,12 +121,27 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
         if (CategoryEntity.selectAll("").size() == 0){
             addCategory("Продукты");
             addCategory("Техника");
             addCategory("Одежда");
             addCategory("Канцтовары");
             addCategory("Прочее");
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    List<CategoryEntity> categoryEntityList = CategoryEntity.selectAll("");
+                    try {
+                        userSyncCategoriesModel = restService.userSyncCategoriesModel(categoryEntityList.get(0).getId().toString(), categoryEntityList.get(0).getName(), MoneyTrackerAplication.getGoogleAuthToken());
+                        Log.d("POST", userSyncCategoriesModel.getStatus());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, 0);
+
         }
 
     }

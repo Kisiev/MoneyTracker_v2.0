@@ -24,6 +24,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
         Log.d("LOGPERFSYNC", "started");
+
     }
 
     public static void syncImmediately(Context context) {

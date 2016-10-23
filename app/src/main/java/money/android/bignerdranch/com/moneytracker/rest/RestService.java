@@ -3,10 +3,13 @@ package money.android.bignerdranch.com.moneytracker.rest;
 import android.support.annotation.NonNull;
 
 import java.io.IOException;
+import java.util.List;
 
+import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserLoginModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserRegistrationModel;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncCategoriesModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserValidTokenModel;
 
 
@@ -44,6 +47,13 @@ public final class RestService {
                 .userData(token)
                 .execute()
                 .body();
+    }
+
+    public UserSyncCategoriesModel userSyncCategoriesModel (@NonNull String id, String title, @NonNull String token) throws IOException {
+        return restClient.getLoftSchoolApi()
+                .sendCategories(id, title, token)
+                .execute().
+                body();
     }
 
 }
