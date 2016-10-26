@@ -1,13 +1,11 @@
 package money.android.bignerdranch.com.moneytracker.rest;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
 import android.support.annotation.NonNull;
 
-import java.io.EOFException;
 import java.io.IOException;
 
-import money.android.bignerdranch.com.moneytracker.rest.registration.UserRegistrationModel;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserLoginModel;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserRegistrationModel;
 
 /**
  * Created by User on 05.10.2016.
@@ -22,12 +20,19 @@ public final class RestService {
     }
 
     public UserRegistrationModel register (@NonNull String login,
-                                           @NonNull String password) throws Exception {
+                                           @NonNull String password) throws IOException {
 
-        return restClient.getRegisterUserApi()
+        return restClient.getLoftSchoolApi()
                 .registerUser(login, password, REGISTER_FLAG)
                 .execute().body();
 
+    }
+
+    public UserLoginModel login (@NonNull String login,
+                                 @NonNull String password) throws IOException{
+        return restClient.getLoftSchoolApi()
+                .login(login, password)
+                .execute().body();
     }
 
 
