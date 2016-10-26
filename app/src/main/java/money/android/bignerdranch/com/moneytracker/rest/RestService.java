@@ -49,9 +49,9 @@ public final class RestService {
                 .body();
     }
 
-    public UserSyncCategoriesModel userSyncCategoriesModel (@NonNull String id, String title, @NonNull String token) throws IOException {
+    public UserSyncCategoriesModel userSyncCategoriesModel (@NonNull String data, @NonNull String token, @NonNull String google_token) throws IOException {
         return restClient.getLoftSchoolApi()
-                .sendCategories(id, title, token)
+                .syncCategories(data, token, google_token)
                 .execute().
                 body();
     }

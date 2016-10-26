@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.google.gson.Gson;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -40,6 +41,7 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -52,6 +54,7 @@ import money.android.bignerdranch.com.moneytracker.UI.fragments.StatisticFragmen
 import money.android.bignerdranch.com.moneytracker.UI.utils.CircleTransform;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
+import money.android.bignerdranch.com.moneytracker.rest.Models.CategoryModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncCategoriesModel;
 import money.android.bignerdranch.com.moneytracker.rest.RestService;
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
 
-        TrackerSyncAdapter.initializeSyncAdapter(this);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         saveInst = savedInstanceState;
@@ -126,25 +129,13 @@ public class MainActivity extends AppCompatActivity
             addCategory("Продукты");
             addCategory("Техника");
             addCategory("Одежда");
-            addCategory("Канцтовары");
             addCategory("Прочее");
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    List<CategoryEntity> categoryEntityList = CategoryEntity.selectAll("");
-                    try {
-                        userSyncCategoriesModel = restService.userSyncCategoriesModel(categoryEntityList.get(0).getId().toString(), categoryEntityList.get(0).getName(), MoneyTrackerAplication.getGoogleAuthToken());
-                        Log.d("POST", userSyncCategoriesModel.getStatus());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, 0);
-
         }
 
+        TrackerSyncAdapter.initializeSyncAdapter(this);
+
     }
+
 
     public void getParam(){
 
