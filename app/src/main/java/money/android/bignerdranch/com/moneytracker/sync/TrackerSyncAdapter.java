@@ -22,9 +22,12 @@ import java.util.List;
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
+import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 import money.android.bignerdranch.com.moneytracker.rest.Models.CategoryModel;
+import money.android.bignerdranch.com.moneytracker.rest.Models.ExpensesModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncCategoriesModel;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncExpensesModel;
 import money.android.bignerdranch.com.moneytracker.rest.RestService;
 
 
@@ -40,9 +43,10 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
         Log.d("LOGPERFSYNC", "started");
         syncCategories();
+        syncExpenses();
     }
 
-    public static void syncImmediately(Context context) {
+    private static void syncImmediately(Context context) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
@@ -50,7 +54,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d("LOGPERFSYNC", "IM");
     }
 
-    public static Account getSyncAccount(Context context) {
+    private static Account getSyncAccount(Context context) {
         AccountManager accountManager = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
         Account newAccount = new Account(context.getString(R.string.app_name), context.getString(R.string.sync_account_type));
         if (null == accountManager.getPassword(newAccount)) {
@@ -82,7 +86,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         List<CategoryModel> categoryModels = new ArrayList<>();
         for (int i = 0; i < categoryEntityList.size(); i ++) {
             CategoryModel list = new CategoryModel();
-            list.setId(Integer.parseInt(categoryEntityList.get(i).getId().toString()));
+            list.setId(categoryEntityList.get(i).getId().toString());
             list.setTitle(categoryEntityList.get(i).getName());
             categoryModels.add(list);
         }
@@ -98,7 +102,29 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d("LOGPERFSYNC", "POSLE");
     }
 
-    public static void configurePeriodicSync(Context context, int syncInterval, int flexTime) {
+    private void syncExpenses(){
+        RestService restService = new RestService();
+        List<ExpensesEntity> expensesEntityList = ExpensesEntity.selectAll("");
+        List<ExpensesModel> expensesModels = new ArrayList<>();
+        for (int i = 0; i < expensesEntityList.size(); i ++){
+            ExpensesModel list = new ExpensesModel();
+            list.setId(Integer.parseInt(expensesEntityList.get(i).getId().toString()));
+            list.setSum(Double.parseDouble(expensesEntityList.get(i).getSum()));
+            list.setComment(expensesEntityList.get(i).getName());
+            list.setTrDate(expensesEntityList.get(i).getDate());
+            CategoryEntity categoryEntity = (expensesEntityList.get(i).getCategory());
+            list.setCategoryId(Integer.parseInt(categoryEntity.getId().toString()));
+            expensesModels.add(list);
+        }
+        String gson = new Gson().toJson(expensesModels);
+        try {
+            UserSyncExpensesModel userSyncExpensesModel = restService.userSyncExpensesModel(gson, MoneyTrackerAplication.getAuthToken(), MoneyTrackerAplication.getGoogleAuthToken());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void configurePeriodicSync(Context context, int syncInterval, int flexTime) {
         Account account = getSyncAccount(context);
         String authority = context.getString(R.string.content_authority);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { // we can enable inexact timers in our periodic sync

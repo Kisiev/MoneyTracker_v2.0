@@ -2,21 +2,18 @@ package money.android.bignerdranch.com.moneytracker.rest.Models;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by User on 26.10.2016.
- */
 
 public class CategoryModel {
         @SerializedName("id")
-        private int id;
+        private String id;
         @SerializedName("title")
         private String title;
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 

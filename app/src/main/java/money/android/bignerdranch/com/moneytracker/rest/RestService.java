@@ -10,6 +10,7 @@ import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserLoginModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserRegistrationModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncCategoriesModel;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncExpensesModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserValidTokenModel;
 
 
@@ -56,4 +57,9 @@ public final class RestService {
                 body();
     }
 
+    public UserSyncExpensesModel userSyncExpensesModel (@NonNull String data, @NonNull String token, @NonNull String google_token) throws IOException {
+       return restClient.getLoftSchoolApi()
+               .syncExpenses(data, token, google_token)
+               .execute().body();
+    }
 }

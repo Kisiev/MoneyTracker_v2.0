@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/main_cat" android:checkableBehavior="single">
         <item
             android:id="@+id/spendItem"
             android:icon="@mipmap/spends"
@@ -22,16 +22,12 @@
 
 
 
-        <item android:title="">
-<menu>
+<group android:id="@+id/exit_cat" android:checkableBehavior="single">
             <item
                 android:id="@+id/exitItem"
                 android:icon="@mipmap/exit"
                 android:title="@string/exit"
                 />
-
-</menu>
-        </item>
-
+</group>
     </menu>
 

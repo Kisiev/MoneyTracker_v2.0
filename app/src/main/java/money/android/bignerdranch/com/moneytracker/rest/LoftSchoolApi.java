@@ -7,8 +7,10 @@ import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserLoginModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserRegistrationModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncCategoriesModel;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncExpensesModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserValidTokenModel;
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -31,10 +33,13 @@ public interface LoftSchoolApi {
     @GET("/gjson")
     Call<UserGetDataModel> userData(@Query("google_token") String googleToken);
 
-
     @POST("/categories/synch")
     Call<UserSyncCategoriesModel> syncCategories(@Query("data") String data,
                                                  @Query("auth_token") String token,
                                                  @Query("google_token") String googleToken);
 
+    @POST("/transactions/synch")
+    Call<UserSyncExpensesModel> syncExpenses(@Query("data") String data,
+                                             @Query("auth_token") String token,
+                                             @Query("google_token") String googleToken);
 }
