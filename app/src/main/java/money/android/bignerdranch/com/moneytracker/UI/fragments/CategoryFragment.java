@@ -8,11 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
@@ -25,16 +28,17 @@ import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.CategoryAdapter;
+import money.android.bignerdranch.com.moneytracker.UI.adapters.ClickListener;
+import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddCategoryActivity_;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 
 @EFragment
 public class CategoryFragment extends Fragment {
 
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
-    }
-
+    private CategoryAdapter adapter;
+    private ActionModeCallback actionModeCallback = new ActionModeCallback();
+    private ActionMode actionMode;
     private RecyclerView recyclerView;
     FloatingActionButton actionButton;
     SearchView searchView;
@@ -102,7 +106,25 @@ public class CategoryFragment extends Fragment {
 
             @Override
             public void onLoadFinished(Loader<List<CategoryEntity>> loader, List<CategoryEntity> data) {
-                recyclerView.setAdapter(new CategoryAdapter(data));
+                adapter = new CategoryAdapter(data, new ClickListener() {
+                    @Override
+                    public void onItemSelected(int position) {
+                        if (actionMode != null) {
+                            toggleSelection(position);
+                        }
+                    }
+
+                    @Override
+                    public boolean onItemLongSelected(int position) {
+                        if (actionMode == null) {
+                            AppCompatActivity activity = (AppCompatActivity) getActivity();
+                            actionMode = activity.startSupportActionMode(actionModeCallback);
+                        }
+                        toggleSelection(position);
+                        return true;
+                    }
+                });
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -124,5 +146,48 @@ public class CategoryFragment extends Fragment {
         });
     }
 
+    private void toggleSelection(int position) {
+        adapter.toggleSelection(position);
+        int count = adapter.getSelectedItemCount();
+        if (count == 0) {
+            actionMode.finish();
+        } else {
+            actionMode.setTitle(String.valueOf(count));
+            actionMode.invalidate();
+        }
+    }
 
+    private class ActionModeCallback implements ActionMode.Callback {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.contextual_action_bar, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_remove:
+                    adapter.removeItems(adapter.getSelectedItems());
+                    mode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            adapter.clearSelection();
+            actionMode = null;
+
+        }
+    }
 }
