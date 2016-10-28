@@ -66,7 +66,6 @@ public class CategoryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ShowDialog();
-                Log.d("asd", "asd");
             }
         });
 

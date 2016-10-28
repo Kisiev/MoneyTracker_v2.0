@@ -6,13 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
-
+import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
 
 public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CategoryHolder>{
@@ -98,14 +101,22 @@ public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CategoryH
 
 
     private void removeItem(int position) {
-        removeExpenses(position);
+
+        removeCategory(position);
         notifyItemRemoved(position);
     }
 
-    private void removeExpenses(int position) {
+    private void removeCategory(int position) {
         if (categoryList.get(position) != null) {
-            categoryList.get(position).delete();
-            categoryList.remove(position);
+            CategoryEntity categoryEntity = new CategoryEntity();
+             if(new Select().from(ExpensesEntity.class).where("id = ?", categoryList.get(position).getId()).execute().toString().equals("")) {
+                 categoryList.get(position).delete();
+                 categoryList.remove(position);
+             } else {
+                 new Delete().from(ExpensesEntity.class).where("category = ?", categoryList.get(position).getId()).execute();
+                 categoryList.get(position).delete();
+                 categoryList.remove(position);
+             }
         }
     }
 }

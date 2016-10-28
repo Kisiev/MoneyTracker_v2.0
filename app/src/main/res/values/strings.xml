@@ -59,4 +59,5 @@
     <string name="hint_category">Название категории</string>
     <string name="add">Добавить</string>
     <string name="cancel">Отмена</string>
+    <string name="add_category_begin">Добавьте сперва категории</string>
 </resources>

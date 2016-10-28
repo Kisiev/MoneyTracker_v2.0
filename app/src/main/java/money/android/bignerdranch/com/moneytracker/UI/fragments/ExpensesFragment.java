@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
@@ -98,25 +99,31 @@ public class ExpensesFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-               addExpenses("300", "item", "28.10.16", CategoryEntity.selectAll("").get(0));
-               addExpenses("300", "item2", "28.10.16", CategoryEntity.selectAll("").get(0));
-               addExpenses("300", "item3", "28.10.16", CategoryEntity.selectAll("").get(0));
-               addExpenses("300", "item4", "28.10.16", CategoryEntity.selectAll("").get(0));
-               addExpenses("300", "item5", "28.10.16", CategoryEntity.selectAll("").get(0));
-               addExpenses("300", "item6", "28.10.16", CategoryEntity.selectAll("").get(0));
-               addExpenses("300", "item7", "28.10.16", CategoryEntity.selectAll("").get(0));
+                if (CategoryEntity.selectAll("").size() > 0) {
+                    addExpenses("300", "item", "28.10.16", CategoryEntity.selectAll("").get(0));
+                    addExpenses("300", "item2", "28.10.16", CategoryEntity.selectAll("").get(0));
+                    addExpenses("300", "item3", "28.10.16", CategoryEntity.selectAll("").get(0));
+                    addExpenses("300", "item4", "28.10.16", CategoryEntity.selectAll("").get(0));
+                    addExpenses("300", "item5", "28.10.16", CategoryEntity.selectAll("").get(0));
+                    addExpenses("300", "item6", "28.10.16", CategoryEntity.selectAll("").get(0));
+                    addExpenses("300", "item7", "28.10.16", CategoryEntity.selectAll("").get(0));
+                    loadExpenses("");
+                } else {
+                    Toast.makeText(getActivity(), R.string.add_category_begin, Toast.LENGTH_LONG).show();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-    public void addExpenses(String sum, String name, String data, CategoryEntity categoryEntity){
+
+    public void addExpenses(String sum, String name, String data, CategoryEntity categoryEntity) {
         ExpensesEntity expensesEntity = new ExpensesEntity();
 
-            expensesEntity.setSum(sum);
-            expensesEntity.setName(name);
-            expensesEntity.setDate(data);
-            expensesEntity.setCategory(categoryEntity);
-            expensesEntity.save();
+        expensesEntity.setSum(sum);
+        expensesEntity.setName(name);
+        expensesEntity.setDate(data);
+        expensesEntity.setCategory(categoryEntity);
+        expensesEntity.save();
 
     }
 
