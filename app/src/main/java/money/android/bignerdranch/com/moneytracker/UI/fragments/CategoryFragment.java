@@ -1,5 +1,6 @@
 package money.android.bignerdranch.com.moneytracker.UI.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,13 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
@@ -44,6 +51,7 @@ public class CategoryFragment extends Fragment {
     SearchView searchView;
     final public static int ID = 1;
     final String SEARCH_CATEGORY = "search_category";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,6 +61,14 @@ public class CategoryFragment extends Fragment {
         actionButton = (FloatingActionButton) rootView.findViewById(R.id.categoryActionButton);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_category);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowDialog();
+                Log.d("asd", "asd");
+            }
+        });
 
         return rootView;
     }
@@ -86,11 +102,11 @@ public class CategoryFragment extends Fragment {
     }
 
     @Background(delay = 1000, id = SEARCH_CATEGORY)
-    void categoryQuery(String query){
+    void categoryQuery(String query) {
         loadCategory(query);
     }
 
-    private void loadCategory(final String query){
+    private void loadCategory(final String query) {
         getLoaderManager().restartLoader(ID, null, new LoaderManager.LoaderCallbacks<List<CategoryEntity>>() {
             @Override
             public Loader<List<CategoryEntity>> onCreateLoader(int id, Bundle args) {
@@ -138,12 +154,7 @@ public class CategoryFragment extends Fragment {
     public void onStart() {
         super.onStart();
         categoryQuery("");
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AddCategoryActivity_.class));
-            }
-        });
+
     }
 
     private void toggleSelection(int position) {
@@ -189,5 +200,34 @@ public class CategoryFragment extends Fragment {
             actionMode = null;
 
         }
+    }
+
+    private void ShowDialog() {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.category_add_dialog);
+        final EditText editText = (EditText) dialog.findViewById(R.id.name_categoryET);
+        Button okButton = (Button) dialog.findViewById(R.id.button_OK);
+        final Button cancelButton = (Button) dialog.findViewById(R.id.button_Cancel);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Editable text = editText.getText();
+                if (!TextUtils.isEmpty(text)){
+                    CategoryEntity categoryEntity = new CategoryEntity();
+                    categoryEntity.setName(text.toString());
+                    categoryEntity.save();
+                    categoryQuery("");
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }
