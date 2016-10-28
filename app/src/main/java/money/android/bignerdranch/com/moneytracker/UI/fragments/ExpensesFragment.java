@@ -32,7 +32,9 @@ import java.util.List;
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ClickListener;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
+import money.android.bignerdranch.com.moneytracker.UI.adapters.SelectableAdapter;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddExpensesActivity_;
+import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
 
@@ -88,6 +90,34 @@ public class ExpensesFragment extends Fragment {
                 return false;
             }
         });
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+               addExpenses("300", "item", "28.10.16", CategoryEntity.selectAll("").get(0));
+               addExpenses("300", "item2", "28.10.16", CategoryEntity.selectAll("").get(0));
+               addExpenses("300", "item3", "28.10.16", CategoryEntity.selectAll("").get(0));
+               addExpenses("300", "item4", "28.10.16", CategoryEntity.selectAll("").get(0));
+               addExpenses("300", "item5", "28.10.16", CategoryEntity.selectAll("").get(0));
+               addExpenses("300", "item6", "28.10.16", CategoryEntity.selectAll("").get(0));
+               addExpenses("300", "item7", "28.10.16", CategoryEntity.selectAll("").get(0));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public void addExpenses(String sum, String name, String data, CategoryEntity categoryEntity){
+        ExpensesEntity expensesEntity = new ExpensesEntity();
+
+            expensesEntity.setSum(sum);
+            expensesEntity.setName(name);
+            expensesEntity.setDate(data);
+            expensesEntity.setCategory(categoryEntity);
+            expensesEntity.save();
+
     }
 
     @Background(id = SEARCH_QUERY, delay = 10000)

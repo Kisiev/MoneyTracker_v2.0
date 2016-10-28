@@ -29,7 +29,7 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesH
     public ExpensesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.expenses_item, parent, false);
-        return new ExpensesHolder(itemView);
+        return new ExpensesHolder(itemView, clickListener);
     }
 
     @Override
@@ -88,24 +88,23 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesH
                 removeItem(positions.get(0));
                 positions.remove(0);
             } else {
-                int count = 1;
+                for (int i = 0; i < positions.size();i ++){
+                    removeItem(positions.get(0));
+                    positions.remove(0);
+                }
+
+               /* int count = 1;
                 while (positions.size() > count) {
                     count++;
                 }
                 removeRange(count - 1, count);
                 for (int i = 0; i < count; i++) {
                     positions.remove(0);
-                }
+                }*/
             }
         }
     }
 
-    private void removeRange(int positionStart, int itemCount) {
-        for (int position = 0; position < itemCount; position++) {
-            removeExpenses(positionStart);
-        }
-        notifyItemRangeRemoved(positionStart, itemCount);
-    }
 
     private void removeItem(int position) {
         removeExpenses(position);
