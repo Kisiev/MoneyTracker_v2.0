@@ -6,22 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
 
-/**
- * Created by User on 18.09.2016.
- */
-public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.ExpensesHolder>{
+public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesHolder> {
 
 
     private List<ExpensesEntity> expensesList;
+    private ClickListener clickListener;
 
-    public ExpensesAdapter(List<ExpensesEntity> expensesList){
+    public ExpensesAdapter(List<ExpensesEntity> expensesList, ClickListener clickListener) {
         this.expensesList = expensesList;
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -36,6 +37,7 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
         ExpensesEntity expenseModel = expensesList.get(position);
         holder.name.setText(expenseModel.getName());
         holder.price.setText(expenseModel.getSum());
+        holder.selectedItem.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -43,15 +45,77 @@ public class ExpensesAdapter extends RecyclerView.Adapter<ExpensesAdapter.Expens
         return expensesList.size();
     }
 
-    class ExpensesHolder extends RecyclerView.ViewHolder{
+    class ExpensesHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
+        private ClickListener clickListener;
         TextView name;
         TextView price;
+        View selectedItem;
 
-        public ExpensesHolder(View itemView) {
+        public ExpensesHolder(View itemView, ClickListener clickListener) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.name_expense_item);
             price = (TextView) itemView.findViewById(R.id.price_expense_item);
+            selectedItem = itemView.findViewById(R.id.selected_overlay);
+            this.clickListener = clickListener;
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            if(clickListener != null) clickListener.onItemSelected(getAdapterPosition());
+
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            return clickListener != null && clickListener.onItemLongSelected(getAdapterPosition());
+        }
+    }
+
+
+    public void removeItems(List<Integer> positions) {
+        Collections.sort(positions, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer lhs, Integer rhs) {
+                return rhs - lhs;
+            }
+        });
+        while (!positions.isEmpty()) {
+            if (positions.size() == 1) {
+                removeItem(positions.get(0));
+                positions.remove(0);
+            } else {
+                int count = 1;
+                while (positions.size() > count) {
+                    count++;
+                }
+                removeRange(count - 1, count);
+                for (int i = 0; i < count; i++) {
+                    positions.remove(0);
+                }
+            }
+        }
+    }
+
+    private void removeRange(int positionStart, int itemCount) {
+        for (int position = 0; position < itemCount; position++) {
+            removeExpenses(positionStart);
+        }
+        notifyItemRangeRemoved(positionStart, itemCount);
+    }
+
+    private void removeItem(int position) {
+        removeExpenses(position);
+        notifyItemRemoved(position);
+    }
+
+    private void removeExpenses(int position) {
+        if (expensesList.get(position) != null) {
+            expensesList.get(position).delete();
+            expensesList.remove(position);
         }
     }
 }

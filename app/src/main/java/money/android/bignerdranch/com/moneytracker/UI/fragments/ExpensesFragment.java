@@ -9,12 +9,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
@@ -27,6 +30,7 @@ import org.androidannotations.api.BackgroundExecutor;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.UI.adapters.ClickListener;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddExpensesActivity_;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
@@ -34,13 +38,16 @@ import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
 @EFragment
 public class ExpensesFragment extends Fragment {
-
+    private ExpensesAdapter adapter;
+    private ActionModeCallback actionModeCallback = new ActionModeCallback();
+    private ActionMode actionMode;
     RecyclerView recyclerView;
     FloatingActionButton actionButton;
     Toolbar toolbar;
     SearchView searchView;
     final public static int ID = 1;
     final public String SEARCH_QUERY = "search_query";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,7 +56,7 @@ public class ExpensesFragment extends Fragment {
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_expenses);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        actionButton = (FloatingActionButton)  rootView.findViewById(R.id.expensesActionButton);
+        actionButton = (FloatingActionButton) rootView.findViewById(R.id.expensesActionButton);
         return rootView;
     }
 
@@ -84,10 +91,11 @@ public class ExpensesFragment extends Fragment {
     }
 
     @Background(id = SEARCH_QUERY, delay = 10000)
-    void expensesQuery(String query){
+    void expensesQuery(String query) {
         loadExpenses(query);
     }
-    private void loadExpenses(final String quary){
+
+    private void loadExpenses(final String quary) {
         getLoaderManager().restartLoader(ID, null, new LoaderManager.LoaderCallbacks<List<ExpensesEntity>>() {
             @Override
             public Loader<List<ExpensesEntity>> onCreateLoader(int id, Bundle args) {
@@ -103,7 +111,25 @@ public class ExpensesFragment extends Fragment {
 
             @Override
             public void onLoadFinished(Loader<List<ExpensesEntity>> loader, List<ExpensesEntity> data) {
-                recyclerView.setAdapter(new ExpensesAdapter(data));
+                adapter = new ExpensesAdapter(data, new ClickListener() {
+                    @Override
+                    public void onItemSelected(int position) {
+                        if (actionMode != null) {
+                            toggleSelection(position);
+                        }
+                    }
+
+                    @Override
+                    public boolean onItemLongSelected(int position) {
+                        if (actionMode == null) {
+                            AppCompatActivity activity = (AppCompatActivity) getActivity();
+                            actionMode = activity.startSupportActionMode(actionModeCallback);
+                        }
+                        toggleSelection(position);
+                        return true;
+                    }
+                });
+                recyclerView.setAdapter(adapter);
             }
 
             @Override
@@ -129,5 +155,50 @@ public class ExpensesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         expensesQuery("");
+    }
+
+    private void toggleSelection(int position) {
+        adapter.toggleSelection(position);
+        int count = adapter.getSelectedItemCount();
+        if (count == 0) {
+            actionMode.finish();
+        } else {
+            actionMode.setTitle(String.valueOf(count));
+            actionMode.invalidate();
+        }
+    }
+
+    private class ActionModeCallback implements ActionMode.Callback {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.getMenuInflater().inflate(R.menu.contextual_action_bar, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_remove:
+                    adapter.removeItems(adapter.getSelectedItems());
+                    mode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            adapter.clearSelection();
+            actionMode = null;
+
+        }
     }
 }

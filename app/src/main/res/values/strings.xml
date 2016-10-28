@@ -53,4 +53,5 @@
 
     <string name="content_authority" translatable="false">com.loftschool.loftmoneytracker</string>
     <string name="sync_account_type" translatable="false">loftmoneytracker.loftschool.com</string>
+    <string name="delete">Delete</string>
 </resources>
