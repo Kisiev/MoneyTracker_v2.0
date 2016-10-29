@@ -10,6 +10,13 @@
 
     </item>
 
+    <item
+        android:id="@+id/menu_selected_all"
+        android:title="@string/select_all"
+        android:icon="@mipmap/playlist_check"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="1">
 
+    </item>
 
 </menu>

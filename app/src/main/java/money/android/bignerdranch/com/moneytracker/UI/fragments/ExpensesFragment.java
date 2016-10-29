@@ -225,6 +225,12 @@ public class ExpensesFragment extends Fragment {
                     adapter.removeItems(adapter.getSelectedItems());
                     mode.finish();
                     return true;
+                case R.id.menu_selected_all:
+                    adapter.clearSelection();
+                    for (int i = 0; i < adapter.getItemCount(); i ++) {
+                        adapter.toggleSelection(i);
+                    }
+                    return true;
                 default:
                     return false;
             }

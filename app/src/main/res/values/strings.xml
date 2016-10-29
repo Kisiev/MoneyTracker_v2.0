@@ -60,4 +60,5 @@
     <string name="add">Добавить</string>
     <string name="cancel">Отмена</string>
     <string name="add_category_begin">Добавьте сперва категории</string>
+    <string name="select_all">Select All</string>
 </resources>
