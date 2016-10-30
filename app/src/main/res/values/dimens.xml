@@ -10,4 +10,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fabMargin">16dp</dimen>
     <dimen name="height_nav_email_edit">20dp</dimen>
+    <dimen name="splash_size">40sp</dimen>
 </resources>
