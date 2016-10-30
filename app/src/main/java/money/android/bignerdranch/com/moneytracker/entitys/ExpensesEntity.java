@@ -3,20 +3,13 @@ package money.android.bignerdranch.com.moneytracker.entitys;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.List;
-import java.util.jar.Attributes;
 
-/**
- * Created by User on 28.09.2016.
- */
+
 @Table(name = "expenses")
 public class ExpensesEntity extends Model{
-
-
-
 
     @Column(name = "sum")
     public String sum;
@@ -69,8 +62,5 @@ public class ExpensesEntity extends Model{
 
     }
 
-    public static List<ExpensesEntity> deleteAll(){
-        return new Delete().from(ExpensesEntity.class).execute();
-    }
 
 }

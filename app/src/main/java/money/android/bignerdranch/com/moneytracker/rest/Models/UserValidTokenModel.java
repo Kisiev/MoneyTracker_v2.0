@@ -1,14 +1,14 @@
 package money.android.bignerdranch.com.moneytracker.rest.Models;
 
-
 import com.google.gson.annotations.SerializedName;
 
-public class UserRegistrationModel {
+public class UserValidTokenModel {
+
     @SerializedName("status")
     private String status;
+    @SerializedName("code")
+    private int code;
 
-    @SerializedName("id")
-    private int id;
 
     public String getStatus() {
         return status;
@@ -18,12 +18,13 @@ public class UserRegistrationModel {
         this.status = status;
     }
 
-    public int getId() {
-        return id;
+    public int getCode() {
+        return code;
     }
 
-    public void setId(int id) {
-        this.id = id;
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
 }

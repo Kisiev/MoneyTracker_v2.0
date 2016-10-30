@@ -3,16 +3,45 @@
           package="money.android.bignerdranch.com.moneytracker">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+
     <application
+        android:name=".UI.utils.MoneyTrackerAplication"
         android:allowBackup="true"
         android:icon="@mipmap/moneylogo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".UI.utils.MoneyTrackerAplication">
-        <meta-data android:name="AA_DB_NAME" android:value="MoneyTracker.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="MoneyTracker.db"/>
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1"/>
+
+
+        <service android:name=".sync.TrackerAuthenticatorService">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator"/>
+        </service>
+
+        <service
+            android:name=".sync.TrackerSyncService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.content.SyncAdapter"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.content.SyncAdapter"
+                android:resource="@xml/syncadapter"/>
+        </service>
 
         <activity
             android:name=".UI.MainActivity"
@@ -20,22 +49,26 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
-        <activity android:name=".UI.utils.AddExpensesActivity_"
-                  android:parentActivityName=".UI.MainActivity"
-                    android:label="@string/add_new_expenses">
+        <activity
+            android:name=".UI.utils.AddExpensesActivity_"
+            android:label="@string/add_new_expenses"
+            android:parentActivityName=".UI.MainActivity">
         </activity>
-        <activity android:name=".UI.utils.AddCategoryActivity_"
-                  android:parentActivityName=".UI.MainActivity"
-                  android:label="@string/add_category_header">
-        </activity>
-
-        <activity android:name=".UI.RegistratioActivity_"
-            android:parentActivityName=".UI.MainActivity"
-            android:label="@string/reg_user_header">
-
+        <activity
+            android:name=".UI.utils.AddCategoryActivity_"
+            android:label="@string/add_category_header"
+            android:parentActivityName=".UI.MainActivity">
         </activity>
 
-        <activity android:name=".UI.SplashActivity_"
+        <activity
+            android:name=".UI.RegistratioActivity_"
+            android:label="@string/reg_user_header"
+            android:parentActivityName=".UI.MainActivity">
+
+        </activity>
+
+        <activity
+            android:name=".UI.SplashActivity_"
             android:theme="@style/CardView.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -45,9 +78,17 @@
 
         </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <!-- Permissions required by the sync adapter -->
+
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
+        <provider
+            android:name=".sync.SubContentProvider"
+            android:authorities="@string/content_authority"
+            android:exported="false"
+            android:syncable="true"/>
     </application>
+
 
 </manifest>

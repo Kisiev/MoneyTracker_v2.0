@@ -46,7 +46,10 @@ import money.android.bignerdranch.com.moneytracker.BuildConfig;
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.utils.ConstantsManager;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserLoginModel;
+import money.android.bignerdranch.com.moneytracker.rest.Models.UserValidTokenModel;
+import money.android.bignerdranch.com.moneytracker.rest.RestClient;
 import money.android.bignerdranch.com.moneytracker.rest.RestService;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserRegistrationModel;
 
@@ -71,8 +74,6 @@ public class RegistratioActivity extends AppCompatActivity {
     LinearLayout linearLayout;
     @ViewById (R.id.login_google)
     SignInButton login_google_btn;
-
-
 
 
     @Background
@@ -104,7 +105,7 @@ public class RegistratioActivity extends AppCompatActivity {
         try {
             UserLoginModel userLoginModel = restService.login(login, password);
             if (userLoginModel.getStatus().equals(ConstantsManager.LOGIN_SUCCEED)){
-                MoneyTrackerAplication.seveAuthToken(userLoginModel.getAuthToken());
+                MoneyTrackerAplication.saveAuthToken(userLoginModel.getAuthToken());
                 navigateToMain();
                 finish();
             } else {
@@ -254,9 +255,23 @@ public class RegistratioActivity extends AppCompatActivity {
         }
         Log.d(LOG_OUT,"token"+ token);
         if (token != null){
-            MoneyTrackerAplication.seveGoogleAuthToken(token);
-            navigateToMain();
-            finish();
+            RestService restService = new RestService();
+            try {
+
+                UserValidTokenModel userValidTokenModel = restService.validToken(token);
+                if (userValidTokenModel.getStatus().equals(ConstantsManager.LOGIN_SUCCEED)) {
+                    MoneyTrackerAplication.saveGoogleAuthToken(token);
+                    UserGetDataModel userGetDataModel = restService.getData(token);
+                    MoneyTrackerAplication.saveGoogleAvatar(userGetDataModel.getPicture());
+                    MoneyTrackerAplication.saveGoogleUserName(userGetDataModel.getName());
+                    MoneyTrackerAplication.saveGoogleUserEmail(userGetDataModel.getEmail());
+                    navigateToMain();
+                    finish();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

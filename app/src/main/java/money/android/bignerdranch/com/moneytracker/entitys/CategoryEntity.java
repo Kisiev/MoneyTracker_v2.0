@@ -8,16 +8,13 @@ import com.activeandroid.query.Select;
 
 import java.util.List;
 
-/**
- * Created by User on 28.09.2016.
- */
 
 @Table(name = "categories")
-public class CategoryEntity extends Model{
+public class CategoryEntity extends Model {
     @Column(name = "name")
-    public  String name;
+    public String name;
 
-    public CategoryEntity(){
+    public CategoryEntity() {
         super();
     }
 
@@ -35,22 +32,14 @@ public class CategoryEntity extends Model{
         this.name = name;
     }
 
-    public List<ExpensesEntity> expenses(){
+    public List<ExpensesEntity> expenses() {
         return getMany(ExpensesEntity.class, "category");
     }
 
-    public static List<CategoryEntity> selectAll(String query){
-        return  new Select().from(CategoryEntity.class)
-                .where("name LIKE?", new String[] {"%" + query + "%"})
+    public static List<CategoryEntity> selectAll(String query) {
+        return new Select().from(CategoryEntity.class)
+                .where("name LIKE?", new String[]{"%" + query + "%"})
                 .execute();
     }
 
-    public static CategoryEntity selectAllInner(String name){
-        return  new Select("categories.id").from(ExpensesEntity.class).innerJoin(CategoryEntity.class).on("expenses.category = ?", name).executeSingle();
-    }
-
-
-    public static List<CategoryEntity> deleteAll(){
-        return new Delete().from(CategoryEntity.class).execute();
-    }
 }

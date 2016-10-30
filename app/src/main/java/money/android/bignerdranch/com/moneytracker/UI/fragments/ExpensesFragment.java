@@ -36,7 +36,6 @@ import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 public class ExpensesFragment extends Fragment {
 
     RecyclerView recyclerView;
-    ExpensesAdapter expensesAdapter;
     FloatingActionButton actionButton;
     Toolbar toolbar;
     SearchView searchView;
