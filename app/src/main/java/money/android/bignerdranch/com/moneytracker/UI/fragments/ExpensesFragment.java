@@ -181,8 +181,8 @@ public class ExpensesFragment extends Fragment {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddExpensesActivity_.class);
-                startActivity(intent);
+                AddExpensesActivity_.intent(getActivity()).start()
+                        .withAnimation(R.anim.enter_pull_in, R.anim.exit_fade_out);
                 /*Snackbar.make(view, getString(R.string.spends), Snackbar.LENGTH_LONG).show();*/
             }
         });
@@ -193,6 +193,7 @@ public class ExpensesFragment extends Fragment {
         super.onResume();
         expensesQuery("");
     }
+
 
     private void toggleSelection(int position) {
         adapter.toggleSelection(position);

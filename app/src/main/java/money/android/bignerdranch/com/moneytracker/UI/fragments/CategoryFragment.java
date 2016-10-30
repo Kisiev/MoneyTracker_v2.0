@@ -2,6 +2,7 @@ package money.android.bignerdranch.com.moneytracker.UI.fragments;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
@@ -57,7 +60,7 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        View rootView = inflater.inflate(R.layout.category_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.category_fragment, container, false);
         actionButton = (FloatingActionButton) rootView.findViewById(R.id.categoryActionButton);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_category);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -210,6 +213,7 @@ public class CategoryFragment extends Fragment {
     private void ShowDialog() {
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.category_add_dialog);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
         final EditText editText = (EditText) dialog.findViewById(R.id.name_categoryET);
         Button okButton = (Button) dialog.findViewById(R.id.button_OK);
         final Button cancelButton = (Button) dialog.findViewById(R.id.button_Cancel);

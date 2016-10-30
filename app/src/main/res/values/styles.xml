@@ -18,4 +18,9 @@
         <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
         <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="DialogTheme">
+        <item name="android:windowEnterAnimation">@anim/enter_pull_in</item>
+        <item name="android:windowExitAnimation">@anim/push_out_left</item>
+    </style>
+
 </resources>
