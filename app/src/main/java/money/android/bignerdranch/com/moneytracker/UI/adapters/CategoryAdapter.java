@@ -108,15 +108,8 @@ public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CategoryH
 
     private void removeCategory(int position) {
         if (categoryList.get(position) != null) {
-            CategoryEntity categoryEntity = new CategoryEntity();
-             if(new Select().from(ExpensesEntity.class).where("id = ?", categoryList.get(position).getId()).execute().toString().equals("")) {
-                 categoryList.get(position).delete();
-                 categoryList.remove(position);
-             } else {
-                 new Delete().from(ExpensesEntity.class).where("category = ?", categoryList.get(position).getId()).execute();
-                 categoryList.get(position).delete();
-                 categoryList.remove(position);
-             }
+            categoryList.get(position).delete();
+            categoryList.remove(position);
         }
     }
 }
