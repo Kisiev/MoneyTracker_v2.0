@@ -4,12 +4,14 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,6 +54,7 @@ public class CategoryFragment extends Fragment {
     private RecyclerView recyclerView;
     FloatingActionButton actionButton;
     SearchView searchView;
+    SwipeRefreshLayout swipeRefreshLayout;
     final public static int ID = 1;
     final String SEARCH_CATEGORY = "search_category";
 
@@ -64,7 +67,22 @@ public class CategoryFragment extends Fragment {
         actionButton = (FloatingActionButton) rootView.findViewById(R.id.categoryActionButton);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_category);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_layout_category);
+        swipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_red_light,
+                android.R.color.holo_blue_light,
+                android.R.color.holo_orange_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                       loadCategory("");
+                    }
+                }, 3000);
+            }
+        });
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,8 +159,9 @@ public class CategoryFragment extends Fragment {
                         toggleSelection(position);
                         return true;
                     }
-                });
+                }, getActivity());
                 recyclerView.setAdapter(adapter);
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -155,7 +174,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        categoryQuery("");
+        loadCategory("");
 
     }
 

@@ -3,12 +3,14 @@ package money.android.bignerdranch.com.moneytracker.UI.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.ViewById;
 import org.androidannotations.api.BackgroundExecutor;
 
 import java.util.List;
@@ -40,7 +43,7 @@ import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
 
 @EFragment
-public class ExpensesFragment extends Fragment {
+public class ExpensesFragment extends Fragment  {
     private ExpensesAdapter adapter;
     private ActionModeCallback actionModeCallback = new ActionModeCallback();
     private ActionMode actionMode;
@@ -48,6 +51,7 @@ public class ExpensesFragment extends Fragment {
     FloatingActionButton actionButton;
     Toolbar toolbar;
     SearchView searchView;
+    SwipeRefreshLayout swipeRefreshLayout;
     final public static int ID = 1;
     final public String SEARCH_QUERY = "search_query";
 
@@ -60,6 +64,23 @@ public class ExpensesFragment extends Fragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_expenses);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         actionButton = (FloatingActionButton) rootView.findViewById(R.id.expensesActionButton);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light,
+                android.R.color.holo_blue_light,
+                android.R.color.holo_orange_light);
+       swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+           @Override
+           public void onRefresh() {
+               new Handler().postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                       loadExpenses("");
+                   }
+               }, 2200);
+
+           }
+       });
+
         return rootView;
     }
 
@@ -107,7 +128,6 @@ public class ExpensesFragment extends Fragment {
                     addExpenses("300", "item5", "28.10.16", CategoryEntity.selectAll("").get(0));
                     addExpenses("300", "item6", "28.10.16", CategoryEntity.selectAll("").get(0));
                     addExpenses("300", "item7", "28.10.16", CategoryEntity.selectAll("").get(0));
-                    loadExpenses("");
                 } else {
                     Toast.makeText(getActivity(), R.string.add_category_begin, Toast.LENGTH_LONG).show();
                 }
@@ -165,8 +185,9 @@ public class ExpensesFragment extends Fragment {
                         toggleSelection(position);
                         return true;
                     }
-                });
+                }, getActivity());
                 recyclerView.setAdapter(adapter);
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
@@ -183,16 +204,14 @@ public class ExpensesFragment extends Fragment {
             public void onClick(View view) {
                 AddExpensesActivity_.intent(getActivity()).start()
                         .withAnimation(R.anim.enter_pull_in, R.anim.exit_fade_out);
+
                 /*Snackbar.make(view, getString(R.string.spends), Snackbar.LENGTH_LONG).show();*/
             }
         });
+        loadExpenses("");
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        expensesQuery("");
-    }
+
 
 
     private void toggleSelection(int position) {
@@ -205,6 +224,8 @@ public class ExpensesFragment extends Fragment {
             actionMode.invalidate();
         }
     }
+
+
 
     private class ActionModeCallback implements ActionMode.Callback {
 
