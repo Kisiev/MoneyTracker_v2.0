@@ -41,12 +41,18 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesH
     }
 
     @Override
-    public void onBindViewHolder(ExpensesHolder holder, int position) {
-        ExpensesEntity expenseModel = expensesList.get(position);
-        holder.name.setText(expenseModel.getName());
-        holder.price.setText(expenseModel.getSum());
-        holder.selectedItem.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
-        setAnimation(holder.cardView, position);
+    public void onBindViewHolder(final ExpensesHolder holder, final int position) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ExpensesEntity expenseModel = expensesList.get(position);
+                holder.name.setText(expenseModel.getName());
+                holder.price.setText(expenseModel.getSum());
+                holder.selectedItem.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
+                setAnimation(holder.cardView, position);
+            }
+        }, 0);
+
     }
 
 

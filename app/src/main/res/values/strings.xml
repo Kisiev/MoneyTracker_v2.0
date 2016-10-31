@@ -55,7 +55,7 @@
     <string name="content_authority" translatable="false">com.moneytrackerr</string>
     <string name="sync_account_type" translatable="false">moneytracker.com</string>
     <string name="delete">Delete</string>
-    <string name="fective_item">добавить фективные траты</string>
+    <string name="fective_item">добавить фиктивные траты</string>
     <string name="hint_category">Название категории</string>
     <string name="add">Добавить</string>
     <string name="cancel">Отмена</string>
