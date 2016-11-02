@@ -40,6 +40,7 @@ import org.androidannotations.api.BackgroundExecutor;
 import java.util.List;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import money.android.bignerdranch.com.moneytracker.R;
@@ -166,11 +167,11 @@ public class CategoryFragment extends Fragment {
                 }, getActivity());
 
                 SlideInBottomAnimationAdapter slideInBottomAnimationAdapter = new SlideInBottomAnimationAdapter(adapter);
-                slideInBottomAnimationAdapter.setDuration(300);
                 recyclerView.setItemAnimator(new FadeInLeftAnimator());
-                AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(slideInBottomAnimationAdapter);
-                alphaInAnimationAdapter.setInterpolator(new FastOutLinearInInterpolator());
-                recyclerView.setAdapter(alphaInAnimationAdapter);
+                ScaleInAnimationAdapter scaleInAnimationAdapter = new ScaleInAnimationAdapter(slideInBottomAnimationAdapter);
+                scaleInAnimationAdapter.setInterpolator(new FastOutLinearInInterpolator());
+                scaleInAnimationAdapter.setDuration(150);
+                recyclerView.setAdapter(scaleInAnimationAdapter);
                 swipeRefreshLayout.setRefreshing(false);
             }
 

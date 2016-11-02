@@ -39,6 +39,7 @@ import java.util.List;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.AnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
@@ -56,7 +57,7 @@ import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
 
 @EFragment
-public class ExpensesFragment extends Fragment  {
+public class ExpensesFragment extends Fragment {
     private ExpensesAdapter adapter;
     private ActionModeCallback actionModeCallback = new ActionModeCallback();
     private ActionMode actionMode;
@@ -82,18 +83,18 @@ public class ExpensesFragment extends Fragment  {
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light,
                 android.R.color.holo_blue_light,
                 android.R.color.holo_orange_light);
-       swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-           @Override
-           public void onRefresh() {
-               new Handler().postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
-                       loadExpenses("");
-                   }
-               }, 2200);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadExpenses("");
+                    }
+                }, 2200);
 
-           }
-       });
+            }
+        });
 
         return rootView;
     }
@@ -203,12 +204,13 @@ public class ExpensesFragment extends Fragment  {
 
 
                 SlideInBottomAnimationAdapter slideInBottomAnimationAdapter = new SlideInBottomAnimationAdapter(adapter);
-                slideInBottomAnimationAdapter.setDuration(300);
                 recyclerView.setItemAnimator(new FadeInLeftAnimator());
-                AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(slideInBottomAnimationAdapter);
-                alphaInAnimationAdapter.setInterpolator(new FastOutLinearInInterpolator());
-                recyclerView.setAdapter(alphaInAnimationAdapter);
+                ScaleInAnimationAdapter scaleInAnimationAdapter = new ScaleInAnimationAdapter(slideInBottomAnimationAdapter);
+                scaleInAnimationAdapter.setDuration(150);
+                recyclerView.setAdapter(scaleInAnimationAdapter);
                 swipeRefreshLayout.setRefreshing(false);
+
+
             }
 
             @Override
@@ -234,8 +236,6 @@ public class ExpensesFragment extends Fragment  {
     }
 
 
-
-
     private void toggleSelection(int position) {
         adapter.toggleSelection(position);
         int count = adapter.getSelectedItemCount();
@@ -246,7 +246,6 @@ public class ExpensesFragment extends Fragment  {
             actionMode.invalidate();
         }
     }
-
 
 
     private class ActionModeCallback implements ActionMode.Callback {
@@ -271,7 +270,7 @@ public class ExpensesFragment extends Fragment  {
                     return true;
                 case R.id.menu_selected_all:
                     adapter.clearSelection();
-                    for (int i = 0; i < adapter.getItemCount(); i ++) {
+                    for (int i = 0; i < adapter.getItemCount(); i++) {
                         adapter.toggleSelection(i);
                     }
                     return true;
