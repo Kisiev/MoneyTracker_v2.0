@@ -42,8 +42,12 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
         Log.d("LOGPERFSYNC", "started");
-        syncCategories();
-        syncExpenses();
+        try {
+            syncCategories();
+            syncExpenses();
+        } catch (Exception e){
+
+        }
     }
 
     private static void syncImmediately(Context context) {
@@ -70,7 +74,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private static void onAccountCreated(Account newAccount, Context context) {
         Log.d("LOGPERFSYNC", "AC");
-        final int SYNC_INTERVAL = 20;
+        final int SYNC_INTERVAL = 60*60*24;
         final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
         TrackerSyncAdapter.configurePeriodicSync(context, SYNC_INTERVAL, SYNC_FLEXTIME);
         ContentResolver.setSyncAutomatically(newAccount, context.getString(R.string.content_authority), true);

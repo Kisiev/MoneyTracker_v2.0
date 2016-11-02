@@ -3,7 +3,9 @@ package money.android.bignerdranch.com.moneytracker.entitys;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.activeandroid.query.Sqlable;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class ExpensesEntity extends Model{
     public String name;
     @Column(name = "date")
     public String date;
-    @Column(name = "category")
+    @Column(name = "category", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
     public CategoryEntity category;
 
     public ExpensesEntity(){
@@ -62,5 +64,10 @@ public class ExpensesEntity extends Model{
 
     }
 
+    public static void deleteItem(String id){
+        new Delete().from(ExpensesEntity.class)
+                .where("name = ?", new String[]{"%"+ id +"%"})
+                .execute();
+    }
 
 }
