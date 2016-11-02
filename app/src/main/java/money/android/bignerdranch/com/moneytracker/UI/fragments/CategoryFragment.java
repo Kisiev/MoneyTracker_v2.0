@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -38,6 +39,9 @@ import org.androidannotations.api.BackgroundExecutor;
 
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.CategoryAdapter;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ClickListener;
@@ -160,7 +164,13 @@ public class CategoryFragment extends Fragment {
                         return true;
                     }
                 }, getActivity());
-                recyclerView.setAdapter(adapter);
+
+                SlideInBottomAnimationAdapter slideInBottomAnimationAdapter = new SlideInBottomAnimationAdapter(adapter);
+                slideInBottomAnimationAdapter.setDuration(300);
+                recyclerView.setItemAnimator(new FadeInLeftAnimator());
+                AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(slideInBottomAnimationAdapter);
+                alphaInAnimationAdapter.setInterpolator(new FastOutLinearInInterpolator());
+                recyclerView.setAdapter(alphaInAnimationAdapter);
                 swipeRefreshLayout.setRefreshing(false);
             }
 

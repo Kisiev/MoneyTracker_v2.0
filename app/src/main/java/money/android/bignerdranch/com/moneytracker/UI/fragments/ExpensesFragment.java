@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -22,6 +24,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -33,6 +37,15 @@ import org.androidannotations.api.BackgroundExecutor;
 
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.AnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
+import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ClickListener;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
@@ -60,6 +73,7 @@ public class ExpensesFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.expenses_fragment, container, false);
+
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.list_of_expenses);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -186,7 +200,14 @@ public class ExpensesFragment extends Fragment  {
                         return true;
                     }
                 }, getActivity());
-                recyclerView.setAdapter(adapter);
+
+
+                SlideInBottomAnimationAdapter slideInBottomAnimationAdapter = new SlideInBottomAnimationAdapter(adapter);
+                slideInBottomAnimationAdapter.setDuration(300);
+                recyclerView.setItemAnimator(new FadeInLeftAnimator());
+                AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(slideInBottomAnimationAdapter);
+                alphaInAnimationAdapter.setInterpolator(new FastOutLinearInInterpolator());
+                recyclerView.setAdapter(alphaInAnimationAdapter);
                 swipeRefreshLayout.setRefreshing(false);
             }
 
@@ -195,6 +216,7 @@ public class ExpensesFragment extends Fragment  {
             }
         });
     }
+
 
     @Override
     public void onStart() {

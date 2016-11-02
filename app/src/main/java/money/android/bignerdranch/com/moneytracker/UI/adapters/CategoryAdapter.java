@@ -25,7 +25,6 @@ import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CategoryHolder>{
     private Context context;
 
-    private int lastPosition = -1;
     private List<CategoryEntity> categoryList;
     private ClickListener clickListener;
     public CategoryAdapter (List<CategoryEntity> categoryList, ClickListener clickListener, Context context){
@@ -46,18 +45,9 @@ public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CategoryH
         CategoryEntity categoryModel = categoryList.get(position);
         holder.categoryName.setText(categoryModel.getName());
         holder.selectedItem.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
-        setAnimation(holder.cardView, position);
     }
 
-    private void setAnimation(View viewToAnimate, int position) {
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
 
-        }
-    }
 
     @Override
     public int getItemCount() {

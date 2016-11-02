@@ -23,7 +23,7 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesH
 
     private Context context;
 
-    private int lastPosition = -1;
+
     private List<ExpensesEntity> expensesList;
     private ClickListener clickListener;
 
@@ -41,30 +41,15 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesH
     }
 
     @Override
-    public void onBindViewHolder(final ExpensesHolder holder, final int position) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ExpensesEntity expenseModel = expensesList.get(position);
-                holder.name.setText(expenseModel.getName());
-                holder.price.setText(expenseModel.getSum());
-                holder.selectedItem.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
-                setAnimation(holder.cardView, position);
-            }
-        }, 0);
+    public void onBindViewHolder(ExpensesHolder holder, int position) {
+        ExpensesEntity expenseModel = expensesList.get(position);
+        holder.name.setText(expenseModel.getName());
+        holder.price.setText(expenseModel.getSum());
+        holder.selectedItem.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
+
 
     }
 
-
-    private void setAnimation(View viewToAnimate, int position) {
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-
-        }
-    }
 
 
     @Override
