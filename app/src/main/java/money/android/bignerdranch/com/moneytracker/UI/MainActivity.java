@@ -46,6 +46,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
 import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
 import money.android.bignerdranch.com.moneytracker.R;
@@ -214,7 +215,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
         int id = item.getItemId();
-
+        Intent intent;
         switch (id)
         {
             case R.id.spendItem:
@@ -236,7 +237,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.exitItem:
                 MoneyTrackerAplication.saveAuthToken("");
                 MoneyTrackerAplication.saveGoogleAuthToken("");
-                Intent intent = new Intent(this, RegistratioActivity_.class);
+                intent = new Intent(this, RegistratioActivity_.class);
                 startActivity(intent);
                 finish();
                 break;

@@ -43,4 +43,6 @@ dependencies {
 
     compile 'jp.wasabeef:recyclerview-animators:2.2.4'
 
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'
+
 }
