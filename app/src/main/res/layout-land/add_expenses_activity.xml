@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:id="@+id/expenses_fragment_ab">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/expenses_sum_et"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:inputType="numberSigned"
+        android:maxLength="10"
+        android:hint="@string/sum_hint_expenses"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLength="25"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:hint="@string/desc_hint_expenses"
+        android:id="@+id/expenses_description_et"
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:id="@+id/expenses_category_spinner"
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/expenses_data_et"
+        android:inputType="date"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:hint="@string/date_hint_expenses"
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_expenses_button"
+            android:id="@+id/expenses_cancel_button"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ok_expenses_button"
+            android:id="@+id/expenses_ok_button"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+
+</LinearLayout>
+    </ScrollView>
