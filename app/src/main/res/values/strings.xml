@@ -27,7 +27,7 @@
     <string name="sum_hint_expenses">Сумма</string>
     <string name="desc_hint_expenses">Описание</string>
     <string name="date_hint_expenses">Дата</string>
-    <string name="set_simbol_for_expenses_sum">1234567890.</string>
+    <string name="set_simbol_for_expenses_sum">1234567890</string>
     <string name="snacker_add_text">Нажата кнопка добавить</string>
     <string name="snacker_cancel_text">Нажата кнопка Отмена</string>
     <string name="add_category_header">Добавит категорию</string>

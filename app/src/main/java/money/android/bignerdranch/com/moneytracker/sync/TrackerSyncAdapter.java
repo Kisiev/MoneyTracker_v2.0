@@ -99,7 +99,6 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d("LOGPERFSYNC", "DO");
         try {
             UserSyncCategoriesModel userSyncCategoriesModel = restService.userSyncCategoriesModel(gson, MoneyTrackerAplication.getAuthToken(), MoneyTrackerAplication.getGoogleAuthToken());
-            Log.d("LOGPERFSYNC", userSyncCategoriesModel.getStatus());
         } catch (IOException e) {
             e.printStackTrace();
         }
