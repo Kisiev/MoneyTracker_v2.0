@@ -87,14 +87,6 @@ public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CategoryH
                     positions.remove(0);
                 }
 
-               /* int count = 1;
-                while (positions.size() > count) {
-                    count++;
-                }
-                removeRange(count - 1, count);
-                for (int i = 0; i < count; i++) {
-                    positions.remove(0);
-                }*/
             }
         }
     }
