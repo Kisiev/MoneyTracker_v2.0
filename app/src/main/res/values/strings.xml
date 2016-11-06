@@ -27,7 +27,7 @@
     <string name="sum_hint_expenses">Сумма</string>
     <string name="desc_hint_expenses">Описание</string>
     <string name="date_hint_expenses">Дата</string>
-    <string name="set_simbol_for_expenses_sum">1234567890.</string>
+    <string name="set_simbol_for_expenses_sum">1234567890</string>
     <string name="snacker_add_text">Нажата кнопка добавить</string>
     <string name="snacker_cancel_text">Нажата кнопка Отмена</string>
     <string name="add_category_header">Добавит категорию</string>
@@ -52,8 +52,8 @@
     <string name="empty_pass">Пароль не может быть пустым</string>
     <string name="empty_log_pass">Логин или пароль не может быть равен NULL</string>
 
-    <string name="content_authority" translatable="false">com.loftschool.loftmoneytracker</string>
-    <string name="sync_account_type" translatable="false">loftmoneytracker.loftschool.com</string>
+    <string name="content_authority" translatable="false">com.moneytrackerr</string>
+    <string name="sync_account_type" translatable="false">moneytracker.com</string>
     <string name="delete">Delete</string>
     <string name="fective_item">добавить фиктивные траты</string>
     <string name="hint_category">Название категории</string>
@@ -61,4 +61,5 @@
     <string name="cancel">Отмена</string>
     <string name="add_category_begin">Добавьте сперва категории</string>
     <string name="select_all">Select All</string>
+    <string name="moneytracker">MoneyTracker</string>
 </resources>

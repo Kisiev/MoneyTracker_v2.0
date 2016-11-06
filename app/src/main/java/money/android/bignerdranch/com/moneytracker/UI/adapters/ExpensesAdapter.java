@@ -1,9 +1,14 @@
 package money.android.bignerdranch.com.moneytracker.UI.adapters;
 
+import android.content.Context;
+import android.os.Handler;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -16,13 +21,16 @@ import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
 public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesHolder> {
 
+    private Context context;
+
 
     private List<ExpensesEntity> expensesList;
     private ClickListener clickListener;
 
-    public ExpensesAdapter(List<ExpensesEntity> expensesList, ClickListener clickListener) {
+    public ExpensesAdapter(List<ExpensesEntity> expensesList, ClickListener clickListener, Context context) {
         this.expensesList = expensesList;
         this.clickListener = clickListener;
+        this.context = context;
     }
 
     @Override
@@ -38,25 +46,31 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesH
         holder.name.setText(expenseModel.getName());
         holder.price.setText(expenseModel.getSum());
         holder.selectedItem.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
+
+
     }
+
+
 
     @Override
     public int getItemCount() {
         return expensesList.size();
     }
 
-    class ExpensesHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    class ExpensesHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         private ClickListener clickListener;
         TextView name;
         TextView price;
         View selectedItem;
+        CardView cardView;
 
         public ExpensesHolder(View itemView, ClickListener clickListener) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.name_expense_item);
             price = (TextView) itemView.findViewById(R.id.price_expense_item);
             selectedItem = itemView.findViewById(R.id.selected_overlay);
+            cardView = (CardView) itemView.findViewById(R.id.expenses_card_root);
             this.clickListener = clickListener;
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
@@ -65,7 +79,7 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesH
 
         @Override
         public void onClick(View view) {
-            if(clickListener != null) clickListener.onItemSelected(getAdapterPosition());
+            if (clickListener != null) clickListener.onItemSelected(getAdapterPosition());
 
         }
 
@@ -88,7 +102,7 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesH
                 removeItem(positions.get(0));
                 positions.remove(0);
             } else {
-                for (int i = 0; i < positions.size();i ++){
+                for (int i = 0; i < positions.size(); i++) {
                     removeItem(positions.get(0));
                     positions.remove(0);
                 }
