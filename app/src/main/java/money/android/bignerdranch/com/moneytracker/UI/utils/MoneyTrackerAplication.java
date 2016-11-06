@@ -2,10 +2,12 @@ package money.android.bignerdranch.com.moneytracker.UI.utils;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 
 import com.activeandroid.ActiveAndroid;
+
+import java.util.Map;
+
+import money.android.bignerdranch.com.moneytracker.services.ServiceSample;
 
 public class MoneyTrackerAplication extends Application {
     private static SharedPreferences sharedPreferences;
@@ -58,4 +60,13 @@ public class MoneyTrackerAplication extends Application {
     public static void saveGoogleUserEmail(String emile){
         sharedPreferences.edit().putString(ConstantsManager.USER_EMILE, emile).apply();
     }
+
+    public static void saveSampleService (String semple){
+        sharedPreferences.edit().putString(ConstantsManager.SEMPLE_SERVICE, semple).apply();
+    }
+
+    public static String getServiceSample(){
+        return sharedPreferences.getString(ConstantsManager.SEMPLE_SERVICE, "");
+    }
+
 }

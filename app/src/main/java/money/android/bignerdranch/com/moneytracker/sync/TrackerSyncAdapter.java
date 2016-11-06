@@ -3,14 +3,17 @@ package money.android.bignerdranch.com.moneytracker.sync;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.AbstractThreadedSyncAdapter;
+import android.content.ComponentName;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.ServiceConnection;
 import android.content.SyncRequest;
 import android.content.SyncResult;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.UI.MainActivity;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
@@ -29,9 +33,12 @@ import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncCategoriesModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncExpensesModel;
 import money.android.bignerdranch.com.moneytracker.rest.RestService;
+import money.android.bignerdranch.com.moneytracker.services.ServiceSample;
 
 
 public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
+
+
 
 
     public TrackerSyncAdapter(Context context, boolean autoInitialize) {
@@ -43,10 +50,13 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         try {
             syncCategories();
             syncExpenses();
+
+
         } catch (Exception e){
 
         }
     }
+
 
     private static void syncImmediately(Context context) {
         Bundle bundle = new Bundle();
@@ -69,7 +79,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private static void onAccountCreated(Account newAccount, Context context) {
-        final int SYNC_INTERVAL = 60*60*24;
+        final int SYNC_INTERVAL = 60;
         final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
         TrackerSyncAdapter.configurePeriodicSync(context, SYNC_INTERVAL, SYNC_FLEXTIME);
         ContentResolver.setSyncAutomatically(newAccount, context.getString(R.string.content_authority), true);

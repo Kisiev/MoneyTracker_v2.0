@@ -29,6 +29,8 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.activeandroid.util.Log;
+
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.OptionsMenu;
@@ -48,12 +50,14 @@ import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.UI.MainActivity;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ClickListener;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.ExpensesAdapter;
 import money.android.bignerdranch.com.moneytracker.UI.adapters.SelectableAdapter;
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddExpensesActivity_;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
+import money.android.bignerdranch.com.moneytracker.services.ServiceSample;
 
 
 @EFragment
@@ -65,6 +69,7 @@ public class ExpensesFragment extends Fragment {
     FloatingActionButton actionButton;
     Toolbar toolbar;
     SearchView searchView;
+    ServiceSample mServiceSample;
     SwipeRefreshLayout swipeRefreshLayout;
     final public static int ID = 1;
     final public String SEARCH_QUERY = "search_query";

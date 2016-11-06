@@ -16,6 +16,7 @@ public final class ConstantsManager {
     public static final String AVATAR = "avatar";
     public static final String USER_NAME = "name";
     public static final String USER_EMILE = "email";
+    public static final String SEMPLE_SERVICE = "m_sample_service";
     private final static String G_PLUS_SCOPE =
             "oauth2:https://www.googleapis.com/auth/plus.me";
     private final static String USERINFO_SCOPE =

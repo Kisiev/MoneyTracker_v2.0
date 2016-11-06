@@ -1,10 +1,14 @@
 package money.android.bignerdranch.com.moneytracker.UI;
 
 import android.content.ClipData;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.LocaleList;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -55,15 +59,21 @@ import money.android.bignerdranch.com.moneytracker.UI.fragments.StatisticFragmen
 import money.android.bignerdranch.com.moneytracker.UI.utils.CircleTransform;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
+import money.android.bignerdranch.com.moneytracker.entitys.SampleServiceEntity;
 import money.android.bignerdranch.com.moneytracker.rest.Models.CategoryModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
 import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncCategoriesModel;
 import money.android.bignerdranch.com.moneytracker.rest.RestService;
+import money.android.bignerdranch.com.moneytracker.services.ServiceSample;
 import money.android.bignerdranch.com.moneytracker.sync.TrackerSyncAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    public ServiceSample mServiceSample;
+
+    private boolean isBound = false;
 
     protected Toolbar toolbar;
     protected DrawerLayout drawer;
@@ -75,14 +85,20 @@ public class MainActivity extends AppCompatActivity
     RestService restService = new RestService();
     Bundle saveInst;
     ImageView avatar;
+    SharedPreferences.Editor sharedPreferences;
+
+    ServiceSample serviceSample;
     public static final String TAG = "myLog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, new SettingFragment(), SettingFragment.class.getSimpleName())
+                    .commit();
+        }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -95,7 +111,6 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
         View headerView = navigationView.getHeaderView(0);
         avatar = (ImageView) headerView.findViewById(R.id.imageView);
@@ -127,7 +142,26 @@ public class MainActivity extends AppCompatActivity
 
         TrackerSyncAdapter.initializeSyncAdapter(this);
 
+
     }
+
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.d(TAG, "onServiceConnected");
+            if (service instanceof ServiceSample.SampleBinder) {
+                mServiceSample = ((ServiceSample.SampleBinder) service).getService();
+            }
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.d(TAG, "onServiceDisconnected");
+            mServiceSample = null;
+            isBound = false;
+        }
+    };
 
 
     public void getParam(){
@@ -181,7 +215,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     private void updateToolbarTitle (Fragment fragment)
     {
         String fragmentClassName = fragment.getClass().getName();
@@ -233,6 +266,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.settingItem:
                 SettingFragment setf = new SettingFragment();
                 replaceFragment(setf);
+
                 break;
             case R.id.exitItem:
                 MoneyTrackerAplication.saveAuthToken("");
@@ -249,5 +283,25 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent serviceIntent = new Intent(this, ServiceSample.class);
+        bindService(serviceIntent, mServiceConnection, BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        if (isBound) {
+            unbindService(mServiceConnection);
+        }
+        super.onStop();
+    }
+
+    public void sendNotify(){
+        mServiceSample.sendNotification();
+    }
 
 }

@@ -45,4 +45,6 @@ dependencies {
 
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0'
 
+    compile 'com.android.support:preference-v7:25.0.0'
+
 }
