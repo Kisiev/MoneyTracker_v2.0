@@ -6,12 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
-
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,8 +14,6 @@ import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
-import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
-
 
 public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CategoryHolder>{
     private Context context;
@@ -111,8 +104,8 @@ public class CategoryAdapter extends SelectableAdapter<CategoryAdapter.CategoryH
 
     private void removeCategory(int position) {
         if (categoryList.get(position) != null) {
-                 categoryList.get(position).delete();
-                 categoryList.remove(position);
+            categoryList.get(position).delete();
+            categoryList.remove(position);
         }
     }
 }
