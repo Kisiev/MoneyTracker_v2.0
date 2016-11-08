@@ -1,56 +1,23 @@
 package money.android.bignerdranch.com.moneytracker.UI;
 
-import android.content.ClipData;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.LocaleList;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Choreographer;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.google.gson.Gson;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-
 import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
 import money.android.bignerdranch.com.moneytracker.R;
@@ -59,36 +26,19 @@ import money.android.bignerdranch.com.moneytracker.UI.fragments.StatisticFragmen
 import money.android.bignerdranch.com.moneytracker.UI.utils.CircleTransform;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
-import money.android.bignerdranch.com.moneytracker.entitys.SampleServiceEntity;
-import money.android.bignerdranch.com.moneytracker.rest.Models.CategoryModel;
-import money.android.bignerdranch.com.moneytracker.rest.Models.UserGetDataModel;
-import money.android.bignerdranch.com.moneytracker.rest.Models.UserSyncCategoriesModel;
-import money.android.bignerdranch.com.moneytracker.rest.RestService;
-import money.android.bignerdranch.com.moneytracker.services.ServiceSample;
 import money.android.bignerdranch.com.moneytracker.sync.TrackerSyncAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-
-    public ServiceSample mServiceSample;
-
-    private boolean isBound = false;
 
     protected Toolbar toolbar;
     protected DrawerLayout drawer;
     protected NavigationView navigationView;
     protected TextView nameText;
     protected TextView emileText;
-    UserGetDataModel userGetDataModel;
-    UserSyncCategoriesModel userSyncCategoriesModel;
-    RestService restService = new RestService();
+
     Bundle saveInst;
     ImageView avatar;
-    SharedPreferences.Editor sharedPreferences;
-
-    ServiceSample serviceSample;
-    public static final String TAG = "myLog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,21 +58,16 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         View headerView = navigationView.getHeaderView(0);
         avatar = (ImageView) headerView.findViewById(R.id.imageView);
         nameText = (TextView) headerView.findViewById(R.id.name_text);
         emileText = (TextView) headerView.findViewById(R.id.email_text);
+        getParam();
 
 
-                getParam();
-
-
-        if (savedInstanceState == null)
-        {
+        if (savedInstanceState == null) {
             replaceFragment(new ExpensesFragment());
             setTitle(getString(R.string.expenses_header_nav));
         }
@@ -131,13 +76,11 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onBackStackChanged() {
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_container);
-                if (f != null)
-                {
+                if (f != null) {
                     updateToolbarTitle(f);
                 } else finish();
             }
         });
-
 
 
         TrackerSyncAdapter.initializeSyncAdapter(this);
@@ -145,26 +88,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private ServiceConnection mServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d(TAG, "onServiceConnected");
-            if (service instanceof ServiceSample.SampleBinder) {
-                mServiceSample = ((ServiceSample.SampleBinder) service).getService();
-            }
-            isBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            Log.d(TAG, "onServiceDisconnected");
-            mServiceSample = null;
-            isBound = false;
-        }
-    };
-
-
-    public void getParam(){
+    public void getParam() {
 
         if (!MoneyTrackerAplication.getGoogleAuthToken().equals("")) {
             saveGlideParam(MoneyTrackerAplication.getGoogleAvatar());
@@ -173,7 +97,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void saveGlideParam(String picture){
+    private void saveGlideParam(String picture) {
 
         Glide.with(this)
                 .load(picture)
@@ -182,26 +106,27 @@ public class MainActivity extends AppCompatActivity
                 .into(new BitmapImageViewTarget(avatar).getView());
     }
 
-    private void addCategory(String name){
+    private void addCategory(String name) {
         CategoryEntity categoryEntity = new CategoryEntity();
         categoryEntity.setName(name);
         categoryEntity.save();
 
     }
+
     private void replaceFragment(Fragment fragment) {
-          String backStackName = fragment.getClass().getName();
+        String backStackName = fragment.getClass().getName();
 
 
-          FragmentManager manager = getSupportFragmentManager();
-          boolean fragmentPopped = manager.popBackStackImmediate(backStackName, 0);
+        FragmentManager manager = getSupportFragmentManager();
+        boolean fragmentPopped = manager.popBackStackImmediate(backStackName, 0);
 
 
-          if (! fragmentPopped && manager.findFragmentByTag(backStackName) == null) {
-                  FragmentTransaction ft = manager.beginTransaction();
-                  ft.replace(R.id.main_container, fragment, backStackName);
-                   ft.addToBackStack(backStackName);
-                   ft.commit();
-          }
+        if (!fragmentPopped && manager.findFragmentByTag(backStackName) == null) {
+            FragmentTransaction ft = manager.beginTransaction();
+            ft.replace(R.id.main_container, fragment, backStackName);
+            ft.addToBackStack(backStackName);
+            ft.commit();
+        }
     }
 
 
@@ -215,26 +140,18 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    private void updateToolbarTitle (Fragment fragment)
-    {
+    private void updateToolbarTitle(Fragment fragment) {
         String fragmentClassName = fragment.getClass().getName();
-        if (fragmentClassName.equals(ExpensesFragment.class.getName()))
-        {
+        if (fragmentClassName.equals(ExpensesFragment.class.getName())) {
             setTitle(getString(R.string.expenses_header_nav));
             navigationView.setCheckedItem(R.id.spendItem);
-        }else
-        if (fragmentClassName.equals(CategoryFragment.class.getName()))
-        {
+        } else if (fragmentClassName.equals(CategoryFragment.class.getName())) {
             setTitle(getString(R.string.category_header_nav));
             navigationView.setCheckedItem(R.id.categoryItem);
-        }else
-        if (fragmentClassName.equals(StatisticFragment.class.getName()))
-        {
+        } else if (fragmentClassName.equals(StatisticFragment.class.getName())) {
             setTitle(getString(R.string.statistic_header_nav));
             navigationView.setCheckedItem(R.id.statItem);
-        }else
-        if (fragmentClassName.equals(SettingFragment.class.getName()))
-        {
+        } else if (fragmentClassName.equals(SettingFragment.class.getName())) {
             setTitle(getString(R.string.setting_header_nav));
             navigationView.setCheckedItem(R.id.settingItem);
         }
@@ -249,8 +166,7 @@ public class MainActivity extends AppCompatActivity
         }
         int id = item.getItemId();
         Intent intent;
-        switch (id)
-        {
+        switch (id) {
             case R.id.spendItem:
                 ExpensesFragment ef = new ExpensesFragment();
                 replaceFragment(ef);
@@ -281,27 +197,6 @@ public class MainActivity extends AppCompatActivity
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Intent serviceIntent = new Intent(this, ServiceSample.class);
-        bindService(serviceIntent, mServiceConnection, BIND_AUTO_CREATE);
-    }
-
-    @Override
-    protected void onStop() {
-        if (isBound) {
-            unbindService(mServiceConnection);
-        }
-        super.onStop();
-    }
-
-    public void sendNotify(){
-        mServiceSample.sendNotification();
     }
 
 }

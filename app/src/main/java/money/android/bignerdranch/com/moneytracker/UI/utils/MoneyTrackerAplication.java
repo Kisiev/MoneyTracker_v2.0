@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 
 import com.activeandroid.ActiveAndroid;
 
-import java.util.Map;
 
-import money.android.bignerdranch.com.moneytracker.services.ServiceSample;
+
+
 
 public class MoneyTrackerAplication extends Application {
     private static SharedPreferences sharedPreferences;
@@ -61,12 +61,5 @@ public class MoneyTrackerAplication extends Application {
         sharedPreferences.edit().putString(ConstantsManager.USER_EMILE, emile).apply();
     }
 
-    public static void saveSampleService (String semple){
-        sharedPreferences.edit().putString(ConstantsManager.SEMPLE_SERVICE, semple).apply();
-    }
-
-    public static String getServiceSample(){
-        return sharedPreferences.getString(ConstantsManager.SEMPLE_SERVICE, "");
-    }
 
 }

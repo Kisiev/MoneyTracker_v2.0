@@ -64,26 +64,26 @@
     <string name="moneytracker">MoneyTracker</string>
 
 
-    <string name="pref_notification_section">Notification settings</string>
+    <string name="pref_notification_section">Настройки уведомлений</string>
 
     <!-- common -->
-    <string name="pref_enable_notifications_true">Enabled</string>
-    <string name="pref_enable_notifications_false">Not enabled</string>
+    <string name="pref_enable_notifications_true">Включен</string>
+    <string name="pref_enable_notifications_false">Выключен</string>
     <string name="pref_enable_notifications_default" translatable="false">true</string>
 
     <!-- Global notifications -->
     <string name="pref_enable_notifications_key" translatable="false">enable_notifications</string>
-    <string name="pref_enable_notifications_label">Updates Notifications</string>
+    <string name="pref_enable_notifications_label">Уведомления</string>
 
     <!-- Vibrate option -->
     <string name="pref_enable_vibrate_notifications_key" translatable="false">
         enable_vibrate_notifications
     </string>
-    <string name="pref_enable_vibrate_notifications_label">Vibrate</string>
+    <string name="pref_enable_vibrate_notifications_label">Вибрация</string>
 
     <!-- Sound option -->
     <string name="pref_enable_sound_notifications_key" translatable="false">enable_sound_notifications</string>
-    <string name="pref_enable_sound_notifications_label">Sound</string>
+    <string name="pref_enable_sound_notifications_label">Звук</string>
 
     <!-- LED option -->
     <string name="pref_enable_led_notifications_key" translatable="false">enable_led_notifications</string>
@@ -94,5 +94,5 @@
     <string name="pref_enable_foreground_notifications_label">Foreground</string>
 
     <!-- String for notification bar-->
-    <string name="notification_message">There is a notification!</string>
+    <string name="notification_message">Синхронизация данных</string>
 </resources>

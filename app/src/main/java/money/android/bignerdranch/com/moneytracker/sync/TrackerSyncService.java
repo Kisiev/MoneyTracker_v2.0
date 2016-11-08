@@ -6,7 +6,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 
-
 public class TrackerSyncService extends Service {
     private static final Object sSyncAdapterLock = new Object();
     private static TrackerSyncAdapter sTrackerSyncAdapter = null;
@@ -25,4 +24,5 @@ public class TrackerSyncService extends Service {
     public IBinder onBind(Intent intent) {
         return sTrackerSyncAdapter.getSyncAdapterBinder();
     }
+
 }

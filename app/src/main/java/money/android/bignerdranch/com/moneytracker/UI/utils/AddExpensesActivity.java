@@ -57,10 +57,7 @@ public class AddExpensesActivity extends AppCompatActivity {
         CategoryEntity category = (CategoryEntity) listSpinner.getSelectedItem();
         expensesEntity.setCategory(category);
         expensesEntity.save();
-
     }
-
-
 
     @AfterViews
     protected void main (){

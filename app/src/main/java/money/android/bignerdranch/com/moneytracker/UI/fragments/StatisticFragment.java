@@ -33,16 +33,8 @@ import java.util.List;
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
-
-
 public class StatisticFragment extends Fragment{
-    protected String[] mMonths = new String[]{
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-            "Sep", "Okt", "Nov", "Dec"
-    };
-    protected String[] mParticipants = new String[]{
-            "Джонни", "Макаронни", "Петруччо"
-    };
+
     protected List<CategoryEntity> categoryEntityList ;
     protected List<ExpensesEntity> expensesEntities ;
     protected List<ExpensesEntity> entitiesOrderByOnDate;
@@ -54,7 +46,6 @@ public class StatisticFragment extends Fragment{
         PieChart pieChart = (PieChart)rootView.findViewById(R.id.pieChart);
         pieChart.setDrawHoleEnabled(true);
         setData(pieChart, 100);
-
         return rootView;
     }
 

@@ -47,11 +47,7 @@ public class ExpensesAdapter extends SelectableAdapter<ExpensesAdapter.ExpensesH
         holder.price.setText(expenseModel.getSum());
         holder.selectedItem.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
 
-
     }
-
-
-
     @Override
     public int getItemCount() {
         return expensesList.size();

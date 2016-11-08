@@ -22,9 +22,7 @@ import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 
 public class CategoriesSpinnerAdapter extends ArrayAdapter<CategoryEntity> implements SpinnerAdapter{
 
-
     List<CategoryEntity> categories;
-
     public CategoriesSpinnerAdapter(Context context, List<CategoryEntity> categories) {
         super(context, 0, categories);
         this.categories = categories;

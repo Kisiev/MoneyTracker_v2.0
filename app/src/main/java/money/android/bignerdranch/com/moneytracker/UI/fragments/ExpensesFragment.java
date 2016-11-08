@@ -57,7 +57,7 @@ import money.android.bignerdranch.com.moneytracker.UI.adapters.SelectableAdapter
 import money.android.bignerdranch.com.moneytracker.UI.utils.AddExpensesActivity_;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
-import money.android.bignerdranch.com.moneytracker.services.ServiceSample;
+
 
 
 @EFragment
@@ -69,7 +69,6 @@ public class ExpensesFragment extends Fragment {
     FloatingActionButton actionButton;
     Toolbar toolbar;
     SearchView searchView;
-    ServiceSample mServiceSample;
     SwipeRefreshLayout swipeRefreshLayout;
     final public static int ID = 1;
     final public String SEARCH_QUERY = "search_query";
@@ -233,8 +232,6 @@ public class ExpensesFragment extends Fragment {
             public void onClick(View view) {
                 AddExpensesActivity_.intent(getActivity()).start()
                         .withAnimation(R.anim.enter_pull_in, R.anim.exit_fade_out);
-
-                /*Snackbar.make(view, getString(R.string.spends), Snackbar.LENGTH_LONG).show();*/
             }
         });
         loadExpenses("");
