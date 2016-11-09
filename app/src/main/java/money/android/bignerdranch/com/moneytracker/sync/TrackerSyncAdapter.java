@@ -3,10 +3,12 @@ package money.android.bignerdranch.com.moneytracker.sync;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SyncRequest;
 import android.content.SyncResult;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import money.android.bignerdranch.com.moneytracker.R;
+import money.android.bignerdranch.com.moneytracker.UI.MainActivity;
 import money.android.bignerdranch.com.moneytracker.UI.utils.MoneyTrackerAplication;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
@@ -43,13 +46,12 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
     private boolean isVibrateEnabled;
     private boolean isSoundEnabled;
     private boolean isLedEnabled;
-    private boolean isForegroundEnabled;
+
     private SharedPreferences mSharedPreferences;
     private String globalNotificationsKey;
     private String vibrateNotificationsKey;
     private String soundNotificationsKey;
     private String ledNotificationsKey;
-    private String foregroundNotificationsKey;
     private static final boolean DEFAULT_VALUE = true;
 
     public TrackerSyncAdapter(Context context, boolean autoInitialize) {
@@ -74,13 +76,12 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         vibrateNotificationsKey = getContext().getString(R.string.pref_enable_vibrate_notifications_key);
         soundNotificationsKey = getContext().getString(R.string.pref_enable_sound_notifications_key);
         ledNotificationsKey = getContext().getString(R.string.pref_enable_led_notifications_key);
-        foregroundNotificationsKey = getContext().getString(R.string.pref_enable_foreground_notifications_key);
+
 
         isNotificationsEnabled = mSharedPreferences.getBoolean(globalNotificationsKey, DEFAULT_VALUE);
         isVibrateEnabled = mSharedPreferences.getBoolean(vibrateNotificationsKey, DEFAULT_VALUE);
         isSoundEnabled = mSharedPreferences.getBoolean(soundNotificationsKey, DEFAULT_VALUE);
         isLedEnabled = mSharedPreferences.getBoolean(ledNotificationsKey, DEFAULT_VALUE);
-        isForegroundEnabled = mSharedPreferences.getBoolean(foregroundNotificationsKey, DEFAULT_VALUE);
     }
 
     private static void syncImmediately(Context context) {
@@ -102,6 +103,7 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
         return newAccount;
     }
+
 
     private static void onAccountCreated(Account newAccount, Context context) {
         final int SYNC_INTERVAL = 60 * 60 * 24;
@@ -173,15 +175,19 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         if (!isNotificationsEnabled) {
             return;
         }
+
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0 ,intent, 0);
+
         mNotificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext())
-
                 .setSmallIcon(R.mipmap.logo_log)
                 .setLargeIcon(BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.logo_log))
                 .setContentTitle(getContext().getString(R.string.app_name))
                 .setContentText(getContext().getString(R.string.notification_message))
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
 
         if (isLedEnabled) {
             builder.setLights(Color.BLUE, LED_LIGHTS_TIME_ON, LED_LIGHTS_TIME_OFF);

@@ -37,13 +37,6 @@
             android:summaryOn="@string/pref_enable_notifications_true"
             android:title="@string/pref_enable_led_notifications_label"/>
 
-        <!-- FOREGROUND -->
-        <android.support.v7.preference.SwitchPreferenceCompat
-            android:defaultValue="@string/pref_enable_notifications_default"
-            android:key="@string/pref_enable_foreground_notifications_key"
-            android:summaryOff="@string/pref_enable_notifications_false"
-            android:summaryOn="@string/pref_enable_notifications_true"
-            android:title="@string/pref_enable_foreground_notifications_label"/>
 
     </android.support.v7.preference.PreferenceCategory>
 
