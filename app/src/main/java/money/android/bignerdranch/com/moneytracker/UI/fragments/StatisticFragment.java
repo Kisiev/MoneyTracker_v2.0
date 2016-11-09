@@ -36,13 +36,7 @@ import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
 
 
 public class StatisticFragment extends Fragment{
-    protected String[] mMonths = new String[]{
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-            "Sep", "Okt", "Nov", "Dec"
-    };
-    protected String[] mParticipants = new String[]{
-            "Джонни", "Макаронни", "Петруччо"
-    };
+
     protected List<CategoryEntity> categoryEntityList ;
     protected List<ExpensesEntity> expensesEntities ;
     protected List<ExpensesEntity> entitiesOrderByOnDate;
@@ -67,7 +61,7 @@ public class StatisticFragment extends Fragment{
             entries.add(new PieEntry((float) (expensesEntityList.size() * range) / expensesEntities.size(), categoryEntityList.get(i).getName()));
 
         }
-        PieDataSet dataSet = new PieDataSet(entries, "Категории");
+        PieDataSet dataSet = new PieDataSet(entries, getString(R.string.category));
         dataSet.setDrawValues(true);
 // add a lot of colors
         ArrayList<Integer> colors = new ArrayList<>();
