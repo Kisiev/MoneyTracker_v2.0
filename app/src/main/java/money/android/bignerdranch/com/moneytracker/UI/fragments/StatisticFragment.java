@@ -58,7 +58,7 @@ public class StatisticFragment extends Fragment{
             entries.add(new PieEntry((float) (expensesEntityList.size() * range) / expensesEntities.size(), categoryEntityList.get(i).getName()));
 
         }
-        PieDataSet dataSet = new PieDataSet(entries, "Категории");
+        PieDataSet dataSet = new PieDataSet(entries, getString(R.string.category));
         dataSet.setDrawValues(true);
 // add a lot of colors
         ArrayList<Integer> colors = new ArrayList<>();
