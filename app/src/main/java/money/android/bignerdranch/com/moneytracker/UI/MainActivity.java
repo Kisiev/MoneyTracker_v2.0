@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.facebook.stetho.Stetho;
+
 import money.android.bignerdranch.com.moneytracker.UI.fragments.CategoryFragment;
 import money.android.bignerdranch.com.moneytracker.UI.fragments.ExpensesFragment;
 import money.android.bignerdranch.com.moneytracker.R;
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Stetho.initialize(Stetho.newInitializerBuilder(this)
+                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                .build());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
