@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:id="@+id/reg_layout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+<EditText
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/login_et"
+    android:hint="@string/login"
+    android:layout_margin="@dimen/activity_horizontal_margin"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/password_et"
+        android:inputType="textPassword"
+        android:maxLength="30"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:hint="@string/password"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirm_password_et"
+        android:inputType="textPassword"
+        android:maxLength="30"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:hint="@string/confirm_password"
+        android:visibility="gone"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:textStyle="normal"
+        android:maxLength="30"
+        android:text="@string/logIn_button_text"
+        android:id="@+id/signin_btn"
+        android:layout_gravity="center"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checked_ch"
+        android:text="Создать новый аккаунт"
+        android:layout_gravity="center"/>
+
+    <com.google.android.gms.common.SignInButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_google"
+        android:layout_gravity="center">
+    </com.google.android.gms.common.SignInButton>
+
+</LinearLayout>
+</ScrollView>

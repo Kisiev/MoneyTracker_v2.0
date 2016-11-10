@@ -36,12 +36,10 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public TrackerSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
-        Log.d("LOGPERFSYNC", "SYNCADAPTER");
     }
 
     @Override
     public void onPerformSync(Account account, Bundle bundle, String s, ContentProviderClient contentProviderClient, SyncResult syncResult) {
-        Log.d("LOGPERFSYNC", "started");
         try {
             syncCategories();
             syncExpenses();
@@ -55,7 +53,6 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         ContentResolver.requestSync(getSyncAccount(context), context.getString(R.string.content_authority), bundle);
-        Log.d("LOGPERFSYNC", "IM");
     }
 
     private static Account getSyncAccount(Context context) {
@@ -67,13 +64,11 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
             }
             onAccountCreated(newAccount, context);
         }
-        Log.d("LOGPERFSYNC", "GETSY");
 
         return newAccount;
     }
 
     private static void onAccountCreated(Account newAccount, Context context) {
-        Log.d("LOGPERFSYNC", "AC");
         final int SYNC_INTERVAL = 60*60*24;
         final int SYNC_FLEXTIME = SYNC_INTERVAL / 3;
         TrackerSyncAdapter.configurePeriodicSync(context, SYNC_INTERVAL, SYNC_FLEXTIME);
@@ -85,24 +80,23 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
     private void syncCategories (){
 
         RestService restService = new RestService();
-        Log.d("LOGPERFSYNC", "NE");
         List<CategoryEntity> categoryEntityList = CategoryEntity.selectAll("");
         List<CategoryModel> categoryModels = new ArrayList<>();
         for (int i = 0; i < categoryEntityList.size(); i ++) {
-            CategoryModel list = new CategoryModel();
-            list.setId(categoryEntityList.get(i).getId().toString());
-            list.setTitle(categoryEntityList.get(i).getName());
-            categoryModels.add(list);
+            CategoryModel categoryModel = new CategoryModel();
+            categoryModel.setId(categoryEntityList.get(i).getId().toString());
+            categoryModel.setTitle(categoryEntityList.get(i).getName());
+            categoryModels.add(categoryModel);
         }
         String gson = new Gson().toJson(categoryModels);
 
-        Log.d("LOGPERFSYNC", "DO");
+
         try {
             UserSyncCategoriesModel userSyncCategoriesModel = restService.userSyncCategoriesModel(gson, MoneyTrackerAplication.getAuthToken(), MoneyTrackerAplication.getGoogleAuthToken());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("LOGPERFSYNC", "POSLE");
+
     }
 
     private void syncExpenses(){
@@ -110,14 +104,14 @@ public class TrackerSyncAdapter extends AbstractThreadedSyncAdapter {
         List<ExpensesEntity> expensesEntityList = ExpensesEntity.selectAll("");
         List<ExpensesModel> expensesModels = new ArrayList<>();
         for (int i = 0; i < expensesEntityList.size(); i ++){
-            ExpensesModel list = new ExpensesModel();
-            list.setId(Integer.parseInt(expensesEntityList.get(i).getId().toString()));
-            list.setSum(Double.parseDouble(expensesEntityList.get(i).getSum()));
-            list.setComment(expensesEntityList.get(i).getName());
-            list.setTrDate(expensesEntityList.get(i).getDate());
+            ExpensesModel expensesModel = new ExpensesModel();
+            expensesModel.setId(Integer.parseInt(expensesEntityList.get(i).getId().toString()));
+            expensesModel.setSum(Double.parseDouble(expensesEntityList.get(i).getSum()));
+            expensesModel.setComment(expensesEntityList.get(i).getName());
+            expensesModel.setTrDate(expensesEntityList.get(i).getDate());
             CategoryEntity categoryEntity = (expensesEntityList.get(i).getCategory());
-            list.setCategoryId(Integer.parseInt(categoryEntity.getId().toString()));
-            expensesModels.add(list);
+            expensesModel.setCategoryId(Integer.parseInt(categoryEntity.getId().toString()));
+            expensesModels.add(expensesModel);
         }
         String gson = new Gson().toJson(expensesModels);
         try {

@@ -70,4 +70,17 @@ public class ExpensesEntity extends Model{
                 .execute();
     }
 
+    public static  List<ExpensesEntity> selectSortCategory(long category){
+        return new Select().from(ExpensesEntity.class)
+                .where("category = ?", category)
+                .execute();
+    }
+
+    public static  List<ExpensesEntity> SelectSortExpensesOnDate(){
+        return new Select().from(ExpensesEntity.class)
+                .orderBy("date")
+                .execute();
+    }
+
+
 }

@@ -49,6 +49,7 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+
         <activity
             android:name=".UI.utils.AddExpensesActivity_"
             android:label="@string/add_new_expenses"
@@ -69,6 +70,7 @@
 
         <activity
             android:name=".UI.SplashActivity_"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
