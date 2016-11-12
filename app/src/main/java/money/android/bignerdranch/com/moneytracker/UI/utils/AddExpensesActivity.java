@@ -57,10 +57,7 @@ public class AddExpensesActivity extends AppCompatActivity {
         CategoryEntity category = (CategoryEntity) listSpinner.getSelectedItem();
         expensesEntity.setCategory(category);
         expensesEntity.save();
-
     }
-
-
 
     @AfterViews
     protected void main (){
@@ -86,7 +83,7 @@ public class AddExpensesActivity extends AppCompatActivity {
                 if (sumEdit.getText().toString().equals("")
                         || descEdit.getText().toString().equals("")
                         || date_et.getText().toString().equals("")){
-                    Toast.makeText(AddExpensesActivity.this, "Не заполнены поля", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddExpensesActivity.this, R.string.error_pole, Toast.LENGTH_LONG).show();
                 } else {
                     addExpenses();
                     sumEdit.setText("");

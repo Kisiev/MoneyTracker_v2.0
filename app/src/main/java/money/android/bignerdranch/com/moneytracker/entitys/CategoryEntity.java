@@ -1,11 +1,8 @@
 package money.android.bignerdranch.com.moneytracker.entitys;
 
-import android.provider.ContactsContract;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.List;
@@ -25,7 +22,6 @@ public class CategoryEntity extends Model {
         this.name = name;
     }
 
-
     public String getName() {
         return name;
     }
@@ -43,7 +39,5 @@ public class CategoryEntity extends Model {
                 .where("name LIKE?", new String[]{"%" + query + "%"})
                 .execute();
     }
-
-
 
 }

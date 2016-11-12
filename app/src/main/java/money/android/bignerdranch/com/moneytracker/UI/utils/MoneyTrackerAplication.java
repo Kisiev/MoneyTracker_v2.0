@@ -2,15 +2,11 @@ package money.android.bignerdranch.com.moneytracker.UI.utils;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 
 import com.activeandroid.ActiveAndroid;
 
 public class MoneyTrackerAplication extends Application {
     private static SharedPreferences sharedPreferences;
-
-
 
     @Override
     public void onCreate() {
@@ -58,4 +54,6 @@ public class MoneyTrackerAplication extends Application {
     public static void saveGoogleUserEmail(String emile){
         sharedPreferences.edit().putString(ConstantsManager.USER_EMILE, emile).apply();
     }
+
+
 }

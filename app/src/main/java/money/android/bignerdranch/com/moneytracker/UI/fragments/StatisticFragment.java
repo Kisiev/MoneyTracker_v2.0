@@ -33,8 +33,6 @@ import java.util.List;
 import money.android.bignerdranch.com.moneytracker.R;
 import money.android.bignerdranch.com.moneytracker.entitys.CategoryEntity;
 import money.android.bignerdranch.com.moneytracker.entitys.ExpensesEntity;
-
-
 public class StatisticFragment extends Fragment{
 
     protected List<CategoryEntity> categoryEntityList ;
@@ -48,7 +46,6 @@ public class StatisticFragment extends Fragment{
         PieChart pieChart = (PieChart)rootView.findViewById(R.id.pieChart);
         pieChart.setDrawHoleEnabled(true);
         setData(pieChart, 100);
-
         return rootView;
     }
 
