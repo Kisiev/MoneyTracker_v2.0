@@ -5,14 +5,8 @@ import android.content.SharedPreferences;
 
 import com.activeandroid.ActiveAndroid;
 
-
-
-
-
 public class MoneyTrackerAplication extends Application {
     private static SharedPreferences sharedPreferences;
-
-
 
     @Override
     public void onCreate() {

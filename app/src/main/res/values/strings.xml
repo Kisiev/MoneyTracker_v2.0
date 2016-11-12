@@ -95,4 +95,5 @@
 
     <!-- String for notification bar-->
     <string name="notification_message">Синхронизация данных</string>
+    <string name="error_pole">Не заполнены поля</string>
 </resources>
